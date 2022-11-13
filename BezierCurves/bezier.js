@@ -72,3 +72,22 @@ function draw_inter_pts(t) {
     ys_copy = intermediates(ys_copy, t);
   }
 }
+
+
+function animate() {
+    t += 0.01;
+    if (t > 1) {
+      t = 0;
+    }
+    draw_inter_pts(t);
+  }
+  function change_animate() {
+    if (animate_checkbox.checked) {
+      animation = setInterval(animate, 5);
+    } else {
+      clearInterval(animation);
+    }
+  }
+  var animation = undefined;
+  change_animate();
+  
