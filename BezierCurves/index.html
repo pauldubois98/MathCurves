@@ -20,8 +20,10 @@
     <script src="bezier.js"></script>
     <div id="input">
         <button id="reset" onclick="draw(n)">Reset</button>
-        <input type="range" min="2" max="10" value="4" step="1" id="range_pts">
-        <input type="number" min="2" max="10" value="4" step="1" id="nb_pts">
+        <input type="range" min="2" max="10" value="4" step="1" id="range_pts"
+            onchange="n = range_pts.value; nb_pts.value = n; draw(n);">
+        <input type="number" min="2" max="10" value="4" step="1" id="nb_pts"
+            onchange="n = nb_pts.value; range_pts.value = n; draw(n);">
         <span> points</span>
     </div>
 </body>
