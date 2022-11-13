@@ -19,3 +19,16 @@ function draw(n) {
     ctx.fill();
   }
 }
+
+function fact(num) {
+  var rval = 1;
+  for (var i = 2; i <= num; i++) rval = rval * i;
+  return rval;
+}
+function bin(n, k) {
+  var num = 1;
+  for (var i = k + 1; i <= n; i++) num = num * i;
+  var den = 1;
+  for (var i = 2; i <= n - k; i++) den = den * i;
+  return num / den;
+}
