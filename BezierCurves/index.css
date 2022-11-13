@@ -9,3 +9,11 @@ h1{
 canvas{
     border: 1px solid black;
 }
+#input{
+    display: flex;
+    align-items: center;
+}
+#nb_pts{
+    width: 3em;
+    margin-right: 0.25em;
+}
