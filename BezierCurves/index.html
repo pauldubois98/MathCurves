@@ -17,17 +17,17 @@
     <canvas width="600" height="400" id="bezier-canvas">
         Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
     </canvas>
-    <script src="bezier.js"></script>
     <div id="input">
-        <button id="reset" onclick="draw(n)">Reset</button>
+        <button id="reset" onclick="draw_pts(n)">Reset</button>
         <input type="range" min="2" max="10" value="4" step="1" id="range_pts"
-            onchange="n = range_pts.value; nb_pts.value = n; draw(n);">
+            onchange="n = range_pts.value; nb_pts.value = n; draw_pts(n);">
         <input type="number" min="2" max="10" value="4" step="1" id="nb_pts"
-            onchange="n = nb_pts.value; range_pts.value = n; draw(n);">
+            onchange="n = nb_pts.value; range_pts.value = n; draw_pts(n);">
         <span> points</span>
     </div>
     <div>
         <input type="checkbox" name="animate_checkbox" id="animate_checkbox">
         <label for="animate_checkbox">animate</label>
     </div>
+    <script src="bezier.js"></script>
 </body>

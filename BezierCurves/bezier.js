@@ -1,10 +1,12 @@
 var canvas = document.getElementById("bezier-canvas");
 const WIDTH = canvas.clientWidth;
 const HEIGHT = canvas.clientHeight;
-var n = 4;
+var n = range_pts.value;
+var xs = [];
+var ys = [];
 var ctx = canvas.getContext("2d");
 
-function draw(n) {
+function draw_pts(n) {
   xs = [];
   ys = [];
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -19,6 +21,7 @@ function draw(n) {
     ctx.fill();
   }
 }
+draw_pts(n);
 
 function fact(num) {
   var rval = 1;
