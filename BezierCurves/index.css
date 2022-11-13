@@ -6,3 +6,6 @@ body{
 h1{
     color: red;
 }
+canvas{
+    border: 1px solid black;
+}
