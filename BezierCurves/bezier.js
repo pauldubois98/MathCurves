@@ -3,8 +3,6 @@ const WIDTH = canvas.clientWidth;
 const HEIGHT = canvas.clientHeight;
 var n = 4;
 var ctx = canvas.getContext("2d");
-ctx.fillStyle = "green";
-ctx.fillRect(10, 10, 100, 100);
 
 function draw(n) {
   xs = [];
