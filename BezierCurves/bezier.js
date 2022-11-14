@@ -5,6 +5,8 @@ var n = range_pts.value;
 var t = 0;
 var xs = [];
 var ys = [];
+var trace_xs = [];
+var trace_ys = [];
 var ctx = canvas.getContext("2d");
 
 function draw_pts(n) {
@@ -72,13 +74,29 @@ function draw_inter_pts(t) {
     ctx.stroke();
     xs_copy = intermediates(xs_copy, t);
     ys_copy = intermediates(ys_copy, t);
+    if (xs_copy.length == 1) {
+      trace_xs.push(xs_copy[0]);
+      trace_ys.push(ys_copy[0]);
+    }
   }
+  // trace
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 5;
+  ctx.moveTo(trace_xs[0], trace_ys[0]);
+  for (let i = 1; i < trace_xs.length; i++) {
+    const x = trace_xs[i];
+    const y = trace_ys[i];
+    ctx.lineTo(x, y);
+  }
+  ctx.stroke();
 }
 
 function animate() {
   t += 0.0001 * animation_speed.value;
   if (t > 1) {
     t = 0;
+    trace_xs = [];
+    trace_ys = [];
   }
   draw_inter_pts(t);
 }
