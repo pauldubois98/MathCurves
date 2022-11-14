@@ -18,15 +18,15 @@
         Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
     </canvas>
     <div id="input">
-        <button id="reset" onclick="draw_pts(n)">Reset</button>
+        <button id="reset" onclick="set_pts(n)">Reset</button>
         <input type="range" min="2" max="10" value="4" step="1" id="range_pts"
-            onchange="n = range_pts.value; nb_pts.value = n; draw_pts(n);">
+            onchange="n = range_pts.value; nb_pts.value = n; set_pts(n);">
         <input type="number" min="2" max="10" value="4" step="1" id="nb_pts"
-            onchange="n = nb_pts.value; range_pts.value = n; draw_pts(n);">
+            onchange="n = nb_pts.value; range_pts.value = n; set_pts(n);">
         <span> points</span>
     </div>
     <div>
-        <input type="range" min="1" max="100" value="50" id="animation_speed">
+        <input type="range" min="2" max="200" value="50" id="animation_speed">
         <input type="checkbox" name="animate_checkbox" id="animate_checkbox" onchange="change_animate()">
         <label for="animate_checkbox">animate</label>
     </div>

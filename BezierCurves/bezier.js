@@ -9,22 +9,21 @@ var trace_xs = [];
 var trace_ys = [];
 var ctx = canvas.getContext("2d");
 
-function draw_pts(n) {
+function set_pts(n) {
+  t = 0;
+  trace_xs = [];
+  trace_ys = [];
   xs = [];
   ys = [];
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
-  ctx.fillStyle = "grey";
   for (let i = 0; i < n; i++) {
     var x = (WIDTH * (i + 0.5)) / n;
     var y = (HEIGHT * (1 + (i % 2))) / 3;
     xs.push(x);
     ys.push(y);
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    ctx.fill();
   }
+  draw_inter_pts(t);
 }
-draw_pts(n);
+set_pts(n);
 
 function fact(num) {
   var rval = 1;
