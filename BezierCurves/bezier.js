@@ -51,8 +51,8 @@ function draw_inter_pts(t) {
   var xs_copy = xs;
   var ys_copy = ys;
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
-  ctx.fillStyle = "black";
   while (xs_copy.length > 0) {
+    ctx.fillStyle = "black";
     for (let i = 0; i < xs_copy.length; i++) {
       const x = xs_copy[i];
       const y = ys_copy[i];
@@ -60,6 +60,8 @@ function draw_inter_pts(t) {
       ctx.arc(x, y, 3, 0, 2 * Math.PI);
       ctx.fill();
     }
+    ctx.strokeStyle = "grey";
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(xs_copy[0], ys_copy[0]);
     for (let i = 1; i < xs_copy.length; i++) {
@@ -73,21 +75,19 @@ function draw_inter_pts(t) {
   }
 }
 
-
 function animate() {
-    t += 0.01;
-    if (t > 1) {
-      t = 0;
-    }
-    draw_inter_pts(t);
+  t += 0.0001 * animation_speed.value;
+  if (t > 1) {
+    t = 0;
   }
-  function change_animate() {
-    if (animate_checkbox.checked) {
-      animation = setInterval(animate, 5);
-    } else {
-      clearInterval(animation);
-    }
+  draw_inter_pts(t);
+}
+function change_animate() {
+  if (animate_checkbox.checked) {
+    animation = setInterval(animate, 5);
+  } else {
+    clearInterval(animation);
   }
-  var animation = undefined;
-  change_animate();
-  
+}
+var animation = undefined;
+change_animate();
