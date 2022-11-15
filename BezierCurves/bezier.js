@@ -28,7 +28,7 @@ function set_pts(n) {
     xs.push(x);
     ys.push(y);
   }
-  render(t);
+  render();
 }
 set_pts(n);
 
@@ -56,7 +56,25 @@ function intermediates(l, t) {
   }
   return new_l;
 }
-function render(t) {
+function rerender() {
+  trace_xs = [];
+  trace_ys = [];
+  for (let rt = 0; rt < t; rt += 0.0001 * Math.max(animation_speed.value, 1)) {
+    var xs_copy = xs;
+    var ys_copy = ys;
+    while (xs_copy.length > 0) {
+      ctx.fillStyle = "black";
+      xs_copy = intermediates(xs_copy, rt);
+      ys_copy = intermediates(ys_copy, rt);
+      if (xs_copy.length == 1) {
+        trace_xs.push(xs_copy[0]);
+        trace_ys.push(ys_copy[0]);
+      }
+    }
+  }
+  render();
+}
+function render() {
   var xs_copy = xs;
   var ys_copy = ys;
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -123,7 +141,7 @@ function animate() {
     trace_xs = [];
     trace_ys = [];
   }
-  render(t);
+  render();
 }
 function change_animate() {
   if (animate_checkbox.checked) {
@@ -148,11 +166,12 @@ canvas.onmousedown = function (e) {
     }
   }
   mouseIsDown = true;
-  render(t);
+  render();
 };
 canvas.onmouseup = function (e) {
   mouseIsDown = false;
   point_selected = false;
+  rerender();
 };
 canvas.onmousemove = function (e) {
   if (!point_selected) return;
@@ -163,6 +182,6 @@ canvas.onmousemove = function (e) {
   mouse_y = e.clientY - rect.top;
   xs[mouse_point] += dx;
   ys[mouse_point] += dy;
-  render(t);
+  render();
   return false;
 };
