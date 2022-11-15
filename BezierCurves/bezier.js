@@ -62,7 +62,11 @@ function draw_inter_pts(t) {
       ctx.arc(x, y, 3, 0, 2 * Math.PI);
       ctx.fill();
     }
-    ctx.strokeStyle = "grey";
+    var h = 2 * Math.PI * ((xs_copy.length - 2) / (n - 1));
+    var r = Math.round(127 * (Math.cos(h + Math.PI * (0 / 3)) + 1));
+    var g = Math.round(127 * (Math.cos(h + Math.PI * (2 / 3)) + 1));
+    var b = Math.round(127 * (Math.cos(h + Math.PI * (4 / 3)) + 1));
+    ctx.strokeStyle = "rgb(" + r + "," + g + "," + b + ")";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(xs_copy[0], ys_copy[0]);
