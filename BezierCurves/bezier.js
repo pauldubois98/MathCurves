@@ -236,7 +236,12 @@ function save() {
   } else {
     params += "animation=off&";
   }
-  params += "xs=[" + String(xs) + "]&ys=[" + String(ys) + "]";
+  params +=
+    "xs=[" +
+    String(xs.map((e) => Math.round(e))) +
+    "]&ys=[" +
+    String(ys.map((e) => Math.round(e))) +
+    "]";
   var old_url = window.location.href.split("?")[0];
   new_url = old_url + "?" + params;
   window.location.replace(new_url);
