@@ -17,7 +17,8 @@ function set_pts(n) {
   ys = [];
   for (let i = 0; i < n; i++) {
     var x = (WIDTH * (i + 0.5)) / n;
-    var y = (HEIGHT * (1 + (i % 2))) / 3;
+    var y =
+      HEIGHT * 0.05 + 0.45 * HEIGHT * Math.random() + (i % 2) * HEIGHT * 0.45;
     xs.push(x);
     ys.push(y);
   }
