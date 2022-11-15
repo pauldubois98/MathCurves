@@ -225,3 +225,19 @@ if (URL_PARAMS.get("animation") !== null) {
   }
 }
 change_animate();
+
+/* URL params save */
+function save() {
+  var params = "";
+  params += "n=" + String(n) + "&";
+  params += "t=" + String(t) + "&";
+  if (animate_checkbox.checked) {
+    params += "animation=on&";
+  } else {
+    params += "animation=off&";
+  }
+  params += "xs=[" + String(xs) + "]&ys=[" + String(ys) + "]";
+  var old_url = window.location.href.split("?")[0];
+  new_url = old_url + "?" + params;
+  window.location.replace(new_url);
+}
