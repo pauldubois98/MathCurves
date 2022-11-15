@@ -79,14 +79,26 @@ function render() {
   var ys_copy = ys;
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
   while (xs_copy.length > 0) {
+    // draw points
     ctx.fillStyle = "black";
-    for (let i = 0; i < xs_copy.length; i++) {
-      const x = xs_copy[i];
-      const y = ys_copy[i];
-      ctx.beginPath();
-      ctx.arc(x, y, 3, 0, 2 * Math.PI);
-      ctx.fill();
+    if (xs_copy.length == n) {
+      for (let i = 0; i < xs_copy.length; i++) {
+        const x = xs_copy[i];
+        const y = ys_copy[i];
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+    } else {
+      for (let i = 0; i < xs_copy.length; i++) {
+        const x = xs_copy[i];
+        const y = ys_copy[i];
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, 2 * Math.PI);
+        ctx.fill();
+      }
     }
+    // draw segments
     if (xs_copy.length == n) {
       ctx.strokeStyle = "grey";
     } else {
