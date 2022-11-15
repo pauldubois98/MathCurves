@@ -2,7 +2,7 @@ var canvas = document.getElementById("bezier-canvas");
 const WIDTH = canvas.clientWidth;
 const HEIGHT = canvas.clientHeight;
 var n = range_pts.value;
-var t = 0;
+var t = nb_t.value;
 var xs = [];
 var ys = [];
 var trace_xs = [];
@@ -15,8 +15,7 @@ var mouse_point = 0;
 var point_selected = false;
 
 /* points creation */
-function set_pts(n) {
-  t = 0;
+function set_pts() {
   trace_xs = [];
   trace_ys = [];
   xs = [];
@@ -28,9 +27,9 @@ function set_pts(n) {
     xs.push(x);
     ys.push(y);
   }
-  render();
+  rerender();
 }
-set_pts(n);
+set_pts();
 
 /* math functions */
 function fact(num) {
@@ -148,6 +147,8 @@ function render() {
 /* animatin part */
 function animate() {
   t += 0.0001 * animation_speed.value;
+  range_t.value = t * 100;
+  nb_t.value = t;
   if (t > 1) {
     t = 0;
     trace_xs = [];

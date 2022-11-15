@@ -14,10 +14,8 @@
     <header>
         <h1>Bezier Curves</h1>
     </header>
-    <canvas width="600" height="400" id="bezier-canvas">
-        Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
-    </canvas>
-    <div id="input">
+    <canvas width="600" height="400" id="bezier-canvas"></canvas>
+    <div class="input">
         <button id="reset" onclick="set_pts(n)">Reset</button>
         <input type="range" min="2" max="10" value="4" step="1" id="range_pts"
             onchange="n = range_pts.value; nb_pts.value = n; set_pts(n);">
@@ -25,10 +23,18 @@
             onchange="n = nb_pts.value; range_pts.value = n; set_pts(n);">
         <span> points</span>
     </div>
-    <div>
+    <div class="input">
+        <span>Animation speed:</span>
         <input type="range" min="2" max="200" value="50" id="animation_speed">
         <input type="checkbox" name="animate_checkbox" id="animate_checkbox" onchange="change_animate()">
         <label for="animate_checkbox">animate</label>
+    </div>
+    <div class="input">
+        <span>t:</span>
+        <input type="number" min="0" max="1" value="0" step="0.01" id="nb_t"
+            onchange="t = nb_t.value; range_t.value = t*100; rerender(t);">
+        <input type="range" min="0" max="100" value="0" id="range_t"
+            onchange="t = range_t.value/100; nb_t.value = t; rerender(t);">
     </div>
     <script src="bezier.js"></script>
 </body>
