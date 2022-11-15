@@ -13,6 +13,7 @@ var mouse_x = 0;
 var mouse_y = 0;
 var mouse_point = 0;
 var point_selected = false;
+var animation = undefined;
 
 /* points creation */
 function set_pts() {
@@ -29,7 +30,6 @@ function set_pts() {
   }
   rerender();
 }
-set_pts();
 
 /* math functions */
 function fact(num) {
@@ -163,8 +163,6 @@ function change_animate() {
     clearInterval(animation);
   }
 }
-var animation = undefined;
-change_animate();
 
 /* click part */
 canvas.onmousedown = function (e) {
@@ -198,3 +196,32 @@ canvas.onmousemove = function (e) {
   render();
   return false;
 };
+
+/* URL params load */
+const URL_PARAMS = new URLSearchParams(window.location.search);
+if (URL_PARAMS.get("n") !== null) {
+  n = Math.max(2, Math.min(10, Number(URL_PARAMS.get("n"))));
+  nb_pts.value = n;
+  range_pts.value = n;
+}
+set_pts();
+if (URL_PARAMS.get("xs") !== null) {
+  xs = eval(URL_PARAMS.get("xs"));
+}
+if (URL_PARAMS.get("ys") !== null) {
+  ys = eval(URL_PARAMS.get("ys"));
+}
+if (URL_PARAMS.get("t") !== null) {
+  t = Math.max(0, Math.min(1, Number(URL_PARAMS.get("t"))));
+  range_t.value = t * 100;
+  nb_t.value = t;
+}
+rerender();
+if (URL_PARAMS.get("animation") !== null) {
+  if (URL_PARAMS.get("animation") == "on") {
+    animate_checkbox.checked = true;
+  } else {
+    animate_checkbox.checked = false;
+  }
+}
+change_animate();
