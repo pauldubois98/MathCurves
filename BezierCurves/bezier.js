@@ -8,6 +8,11 @@ var ys = [];
 var trace_xs = [];
 var trace_ys = [];
 var ctx = canvas.getContext("2d");
+var mouse_down = false;
+var mouse_x = 0;
+var mouse_y = 0;
+var mouse_point = 0;
+var point_selected = false;
 
 /* points creation */
 function set_pts(n) {
@@ -92,6 +97,7 @@ function render(t) {
   // trace
   ctx.strokeStyle = "red";
   ctx.lineWidth = 5;
+  ctx.beginPath();
   ctx.moveTo(trace_xs[0], trace_ys[0]);
   for (let i = 1; i < trace_xs.length; i++) {
     const x = trace_xs[i];
@@ -99,6 +105,14 @@ function render(t) {
     ctx.lineTo(x, y);
   }
   ctx.stroke();
+  // point selection
+  if (point_selected) {
+    ctx.strokeStyle = "dimgrey";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(xs[mouse_point], ys[mouse_point], 6, 0, 2 * Math.PI);
+    ctx.stroke();
+  }
 }
 
 /* animatin part */
@@ -120,3 +134,35 @@ function change_animate() {
 }
 var animation = undefined;
 change_animate();
+
+/* click part */
+canvas.onmousedown = function (e) {
+  var rect = canvas.getBoundingClientRect();
+  mouse_x = e.clientX - rect.left;
+  mouse_y = e.clientY - rect.top;
+  point_selected = false;
+  for (let i = 0; i < xs.length; i++) {
+    if ((xs[i] - mouse_x) ** 2 + (ys[i] - mouse_y) ** 2 < 100) {
+      mouse_point = i;
+      point_selected = true;
+    }
+  }
+  mouseIsDown = true;
+  render(t);
+};
+canvas.onmouseup = function (e) {
+  mouseIsDown = false;
+  point_selected = false;
+};
+canvas.onmousemove = function (e) {
+  if (!point_selected) return;
+  var rect = canvas.getBoundingClientRect();
+  dx = e.clientX - rect.left - mouse_x;
+  dy = e.clientY - rect.top - mouse_y;
+  mouse_x = e.clientX - rect.left;
+  mouse_y = e.clientY - rect.top;
+  xs[mouse_point] += dx;
+  ys[mouse_point] += dy;
+  render(t);
+  return false;
+};
