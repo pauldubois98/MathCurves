@@ -244,5 +244,9 @@ function save() {
     "]";
   var old_url = window.location.href.split("?")[0];
   new_url = old_url + "?" + params;
-  window.location.replace(new_url);
+  navigator.clipboard.writeText(new_url);
+  popup.style.display = "block";
+  setTimeout(function () {
+    window.location.replace(new_url);
+  }, 1000);
 }
