@@ -1,4 +1,4 @@
-# MathCurves
+# [Math Curves](https://pauldubois98.github.io/MathCurves/)
 
 A tool to decompose &amp; visualize mathematical curves.
 
