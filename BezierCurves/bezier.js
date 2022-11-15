@@ -9,6 +9,7 @@ var trace_xs = [];
 var trace_ys = [];
 var ctx = canvas.getContext("2d");
 
+/* points creation */
 function set_pts(n) {
   t = 0;
   trace_xs = [];
@@ -22,10 +23,11 @@ function set_pts(n) {
     xs.push(x);
     ys.push(y);
   }
-  draw_inter_pts(t);
+  render(t);
 }
 set_pts(n);
 
+/* math functions */
 function fact(num) {
   var rval = 1;
   for (var i = 2; i <= num; i++) rval = rval * i;
@@ -39,6 +41,7 @@ function bin(n, k) {
   return num / den;
 }
 
+/* render part */
 function intermediates(l, t) {
   new_l = [];
   for (let i = 1; i < l.length; i++) {
@@ -48,8 +51,7 @@ function intermediates(l, t) {
   }
   return new_l;
 }
-
-function draw_inter_pts(t) {
+function render(t) {
   var xs_copy = xs;
   var ys_copy = ys;
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -99,6 +101,7 @@ function draw_inter_pts(t) {
   ctx.stroke();
 }
 
+/* animatin part */
 function animate() {
   t += 0.0001 * animation_speed.value;
   if (t > 1) {
@@ -106,7 +109,7 @@ function animate() {
     trace_xs = [];
     trace_ys = [];
   }
-  draw_inter_pts(t);
+  render(t);
 }
 function change_animate() {
   if (animate_checkbox.checked) {
