@@ -144,7 +144,7 @@ function render() {
   }
 }
 
-/* animatin part */
+/* animation part */
 function animate() {
   t += 0.0001 * animation_speed.value;
   range_t.value = t * 100;
