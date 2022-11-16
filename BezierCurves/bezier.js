@@ -184,15 +184,37 @@ canvas.onmousedown = function (e) {
   var rect = canvas.getBoundingClientRect();
   mouse_x = e.clientX - rect.left;
   mouse_y = e.clientY - rect.top;
-  point_selected = false;
-  for (let i = 0; i < xs.length; i++) {
-    if ((xs[i] - mouse_x) ** 2 + (ys[i] - mouse_y) ** 2 < 100) {
-      mouse_point = i;
-      point_selected = true;
+  if (e.buttons == 1) {
+    point_selected = false;
+    for (let i = 0; i < xs.length; i++) {
+      if ((xs[i] - mouse_x) ** 2 + (ys[i] - mouse_y) ** 2 < 100) {
+        mouse_point = i;
+        point_selected = true;
+      }
     }
+    mouseIsDown = true;
+    render();
   }
-  mouseIsDown = true;
-  render();
+  if (e.buttons == 2) {
+    point_selected = false;
+    for (let i = 0; i < xs.length; i++) {
+      if ((xs[i] - mouse_x) ** 2 + (ys[i] - mouse_y) ** 2 < 100) {
+        mouse_point = i;
+        point_selected = true;
+      }
+    }
+    if (point_selected) {
+      delete xs[mouse_point];
+      delete ys[mouse_point];
+      xs = xs.filter((a) => typeof a == "number");
+      ys = ys.filter((a) => typeof a == "number");
+      n--;
+      nb_pts.value = n;
+      range_pts.value = n;
+      point_selected = false;
+    }
+    rerender();
+  }
 };
 canvas.onmouseup = function (e) {
   mouseIsDown = false;
