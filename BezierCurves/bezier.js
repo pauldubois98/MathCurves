@@ -212,6 +212,15 @@ canvas.onmousedown = function (e) {
       nb_pts.value = n;
       range_pts.value = n;
       point_selected = false;
+    } else {
+      xs.push(mouse_x);
+      ys.push(mouse_y);
+      mouse_point = n;
+      n++;
+      nb_pts.value = n;
+      range_pts.value = n;
+      point_selected = true;
+      mouseIsDown = true;
     }
     rerender();
   }
