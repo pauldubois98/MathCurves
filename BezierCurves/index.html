@@ -16,7 +16,7 @@
     </header>
     <canvas width="600" height="400" id="bezier-canvas"></canvas>
     <div class="input">
-        <button id="reset" onclick="set_pts(n)">Reset</button>
+        <button id="reset" onclick="n = 4; range_pts.value = 4; nb_pts.value = 4; set_pts(n)">Reset</button>
         <input type="range" min="2" max="10" value="4" step="1" id="range_pts"
             onchange="n = range_pts.value; nb_pts.value = n; set_pts(n);">
         <input type="number" min="2" max="10" value="4" step="1" id="nb_pts"
