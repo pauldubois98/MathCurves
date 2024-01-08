@@ -4,6 +4,6 @@ body{
     align-items: center;
 }
 
-#canvas{
+#fourier-canvas{
     border: 1px solid black;
 }
