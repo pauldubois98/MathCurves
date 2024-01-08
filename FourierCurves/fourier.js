@@ -15,7 +15,7 @@ var PTS = [
 function render() {
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
   ctx.fillStyle = "black";
-  for (let i = 1; i < PTS.length; i++) {
+  for (let i = 0; i < PTS.length; i++) {
     ctx.beginPath();
     ctx.arc(PTS[i].x, PTS[i].y, 4, 0, 2 * Math.PI);
     ctx.fill();
@@ -47,6 +47,11 @@ canvas.addEventListener("pointerdown", function (evt) {
       mouse_point = i;
       mouse_down = true;
     }
+  }
+  if (!mouse_down) {
+    PTS.push(mousePos);
+    mouse_down = true;
+    mouse_point = PTS.length - 1;
   }
   render();
 });
