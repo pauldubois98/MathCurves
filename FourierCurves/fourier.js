@@ -79,10 +79,21 @@ function calculate_fourier() {
     y /= PTS.length;
     COEFFS_NEGATIVES.push(cartesian_to_polar(x, y));
   }
+  TRACE = [];
 }
 calculate_fourier();
 
 function points() {
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "grey";
+  ctx.beginPath();
+  ctx.moveTo(PTS[0].x, PTS[0].y);
+  for (let i = 1; i < PTS.length; i++) {
+    ctx.lineTo(PTS[i].x, PTS[i].y);
+  }
+  ctx.lineTo(PTS[0].x, PTS[0].y);
+  ctx.stroke();
+  ctx.closePath();
   ctx.fillStyle = "black";
   for (let i = 0; i < PTS.length; i++) {
     ctx.beginPath();
