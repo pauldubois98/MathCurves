@@ -12,7 +12,7 @@ var PTS = [
   { x: 250, y: 100 },
 ];
 var COEFFS_POSITIVES = [
-  { r: 0, a: 0 },
+  { r: (WIDTH ** 2 + HEIGHT ** 2) ** 0.5 / 2, a: +Math.PI / 4 },
   { r: 100, a: 1 },
   { r: 40, a: 2 },
 ];
@@ -82,12 +82,12 @@ canvas.addEventListener("pointerup", function (evt) {
 });
 
 function plot(t) {
-  var x = WIDTH / 2;
-  var y = HEIGHT / 2;
+  var x = 0;
+  var y = 0;
   ctx.strokeStyle = "grey";
   ctx.lineWidth = 2;
-  ctx.beginPath();
   ctx.moveTo(x, y);
+  ctx.beginPath();
   for (let i = 0; i < COEFFS_POSITIVES.length; i++) {
     const coef_positive = COEFFS_POSITIVES[i];
     const coef_negative = COEFFS_NEGATIVES[i];
