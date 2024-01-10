@@ -11,6 +11,15 @@ var PTS = [
   { x: 200, y: 50 },
   { x: 250, y: 100 },
 ];
+var COEFFS_POSITIVES = [
+  { r: 50, a: 1 },
+  { r: 20, a: 2 },
+];
+var COEFFS_NEGATIVES = [
+  { r: 40, a: 3 },
+  { r: 10, a: 0 },
+];
+var T = 0;
 
 function render() {
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
