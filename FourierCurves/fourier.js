@@ -21,7 +21,6 @@ var COEFFS_NEGATIVES = [
   { r: 80, a: 3 },
   { r: 20, a: 0 },
 ];
-var COEF_LENGTH = 3;
 var T = 0;
 var TRACE = [];
 
@@ -49,7 +48,11 @@ function calculate_fourier() {
   y /= PTS.length;
   COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
   COEFFS_NEGATIVES.push({ r: 0, a: 0 });
-  for (let i = 1; (i < COEF_LENGTH) & (i < PTS.length - 1); i++) {
+  for (
+    let i = 1;
+    (i < Number(number_fourier.value)) & (i < PTS.length - 1);
+    i++
+  ) {
     var x = 0;
     var y = 0;
     for (let j = 0; j < PTS.length; j++) {
@@ -183,7 +186,7 @@ function plot(t) {
   }
   ctx.stroke();
   TRACE.push({ x: x, y: y });
-  if (TRACE.length > (2 * Math.PI/0.02)) {
+  if (TRACE.length > (2 * Math.PI) / 0.02) {
     TRACE.shift();
   }
 }
