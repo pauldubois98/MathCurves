@@ -24,6 +24,16 @@ var COEFFS_NEGATIVES = [
 var T = 0;
 var TRACE = [];
 
+function cartesian_to_polar(x, y) {
+  var r = (x ** 2 + y ** 2) ** 0.5;
+  var a = Math.atan2(y, x);
+  return { r: r, a: a };
+}
+function polar_to_cartesian(r, a) {
+  var x = r * Math.cos(a);
+  var y = r * Math.sin(a);
+  return { x: x, y: y };
+}
 function calculate_fourier() {
   COEFFS_POSITIVES = [];
   COEFFS_NEGATIVES = [];
@@ -36,9 +46,7 @@ function calculate_fourier() {
   }
   x /= PTS.length;
   y /= PTS.length;
-  var r = (x ** 2 + y ** 2) ** 0.5;
-  var a = Math.atan2(y, x);
-  COEFFS_POSITIVES.push({ r: r, a: a });
+  COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
   COEFFS_NEGATIVES.push({ r: 0, a: 0 });
 }
 calculate_fourier();
