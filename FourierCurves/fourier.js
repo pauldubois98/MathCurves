@@ -22,6 +22,7 @@ var COEFFS_NEGATIVES = [
   { r: 20, a: 0 },
 ];
 var T = 0;
+var TRACE = [];
 
 function points() {
   ctx.fillStyle = "black";
@@ -81,6 +82,18 @@ canvas.addEventListener("pointerup", function (evt) {
   points();
 });
 
+function trace() {
+  ctx.fillStyle = "black";
+  var k = 0;
+  for (const point of TRACE) {
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+    k += 1;
+  }
+}
+
 function plot(t) {
   var x = 0;
   var y = 0;
@@ -99,18 +112,21 @@ function plot(t) {
     ctx.lineTo(x, y);
   }
   ctx.stroke();
+  TRACE.push({ x: x, y: y });
 }
 
 function render() {
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
   points();
   plot(T);
+  trace();
 }
 
 function animate() {
   T += 0.02;
   if (T > 2 * Math.PI) {
     T -= 2 * Math.PI;
+    TRACE = [];
   }
   render();
 }
