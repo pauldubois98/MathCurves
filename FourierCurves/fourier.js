@@ -54,8 +54,9 @@ function calculate_fourier() {
   }
   x /= PTS.length;
   y /= PTS.length;
-  COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
-  COEFFS_NEGATIVES.push({ r: 0, a: 0 });
+  const p = cartesian_to_polar(x, y);
+  COEFFS_POSITIVES.push({ r: p.r, a: p.a, k: 0 });
+  COEFFS_NEGATIVES.push({ r: 0, a: 0, k: 0 });
   for (
     let i = 1;
     (i < Number(number_fourier_min.value) + 1) & (i < PTS.length);
@@ -73,7 +74,8 @@ function calculate_fourier() {
     }
     x /= PTS.length;
     y /= PTS.length;
-    COEFFS_NEGATIVES.push(cartesian_to_polar(x, y));
+    const p = cartesian_to_polar(x, y);
+    COEFFS_NEGATIVES.push({ r: p.r, a: p.a, k: -i });
   }
   for (
     let i = 1;
@@ -93,7 +95,8 @@ function calculate_fourier() {
     }
     x /= PTS.length;
     y /= PTS.length;
-    COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
+    const p = cartesian_to_polar(x, y);
+    COEFFS_POSITIVES.push({ r: p.r, a: p.a, k: i });
   }
   TRACE = [];
 }
@@ -165,6 +168,18 @@ function changed_min() {
   calculate_fourier();
 }
 
+function changed_max() {
+  if (
+    Number(number_fourier_min.value) + Number(number_fourier_max.value) + 1 >
+    PTS.length
+  ) {
+    number_fourier_min.value =
+      PTS.length - Number(number_fourier_max.value) - 1;
+    range_fourier_min.value = number_fourier_min.value;
+  }
+  calculate_fourier();
+}
+
 // plotting functions //
 function points() {
   if (PTS.length == 0) {
@@ -204,33 +219,45 @@ function plot(t) {
   ctx.lineWidth = 2;
   ctx.moveTo(x, y);
   ctx.beginPath();
-  var i = 0;
-  for (
-    i = 0;
-    i < Math.min(COEFFS_POSITIVES.length, COEFFS_NEGATIVES.length);
-    i++
-  ) {
-    const coef_positive = COEFFS_POSITIVES[i];
-    const coef_negative = COEFFS_NEGATIVES[i];
-    x += coef_positive.r * Math.cos(i * t + coef_positive.a);
-    y += coef_positive.r * Math.sin(i * t + coef_positive.a);
-    ctx.lineTo(x, y);
-    x += coef_negative.r * Math.cos(-i * t + coef_negative.a);
-    y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
+  for (let i = 0; i < COEFFS_POSITIVES.length; i++) {
+    const coef = COEFFS_POSITIVES[i];
+    x += coef.r * Math.cos(coef.k * t + coef.a);
+    y += coef.r * Math.sin(coef.k * t + coef.a);
     ctx.lineTo(x, y);
   }
-  for (; i < COEFFS_POSITIVES.length; i++) {
-    const coef_positive = COEFFS_POSITIVES[i];
-    x += coef_positive.r * Math.cos(i * t + coef_positive.a);
-    y += coef_positive.r * Math.sin(i * t + coef_positive.a);
+  for (let i = 0; i < COEFFS_NEGATIVES.length; i++) {
+    const coef = COEFFS_NEGATIVES[i];
+    x += coef.r * Math.cos(coef.k * t + coef.a);
+    y += coef.r * Math.sin(coef.k * t + coef.a);
     ctx.lineTo(x, y);
   }
-  for (; i < COEFFS_NEGATIVES.length; i++) {
-    const coef_negative = COEFFS_NEGATIVES[i];
-    x += coef_negative.r * Math.cos(-i * t + coef_negative.a);
-    y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
-    ctx.lineTo(x, y);
-  }
+  // var i = 0;
+  // for (
+  //   i = 0;
+  //   i < Math.min(COEFFS_POSITIVES.length, COEFFS_NEGATIVES.length);
+  //   i++
+  // ) {
+  //   const coef_positive = COEFFS_POSITIVES[i];
+  //   const coef_negative = COEFFS_NEGATIVES[i];
+  //   x += coef_positive.r * Math.cos(i * t + coef_positive.a);
+  //   y += coef_positive.r * Math.sin(i * t + coef_positive.a);
+  //   ctx.lineTo(x, y);
+  //   x += coef_negative.r * Math.cos(-i * t + coef_negative.a);
+  //   y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
+  //   ctx.lineTo(x, y);
+  // }
+  // for (; i < COEFFS_POSITIVES.length; i++) {
+  //   const coef_positive = COEFFS_POSITIVES[i];
+  //   x += coef_positive.r * Math.cos(i * t + coef_positive.a);
+  //   y += coef_positive.r * Math.sin(i * t + coef_positive.a);
+  //   ctx.lineTo(x, y);
+  // }
+  // for (; i < COEFFS_NEGATIVES.length; i++) {
+  //   const coef_negative = COEFFS_NEGATIVES[i];
+  //   x += coef_negative.r * Math.cos(-i * t + coef_negative.a);
+  //   y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
+  //   ctx.lineTo(x, y);
+  // }
 
   ctx.stroke();
   TRACE.push({ x: x, y: y });

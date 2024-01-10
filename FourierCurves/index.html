@@ -18,9 +18,9 @@
         </div>
         <div>
             <input type="range" id="range_fourier_max" min="1" max="20" value="5"
-                oninput="number_fourier_max.value = range_fourier_max.value; calculate_fourier();">
+                oninput="number_fourier_max.value = range_fourier_max.value; changed_max();">
             <input type="number" id="number_fourier_max" min="1" max="20" value="5"
-                oninput="range_fourier_max.value =number_fourier_max.value; calculate_fourier();">
+                oninput="range_fourier_max.value =number_fourier_max.value; changed_max();">
         </div>
         <div>
             <button id="btn_delete_all" onclick="PTS = []; calculate_fourier();">Delete all points</button>
