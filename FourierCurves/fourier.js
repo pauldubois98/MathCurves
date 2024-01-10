@@ -18,16 +18,7 @@ var PTS = [
   { x: 300, y: 400 },
   { x: 200, y: 300 },
 ];
-var COEFFS_POSITIVES = [
-  { r: (WIDTH ** 2 + HEIGHT ** 2) ** 0.5 / 2, a: +Math.PI / 4 },
-  { r: 100, a: 1 },
-  { r: 40, a: 2 },
-];
-var COEFFS_NEGATIVES = [
-  { r: 0, a: 0 },
-  { r: 80, a: 3 },
-  { r: 20, a: 0 },
-];
+var COEFFS = [];
 var T = 0;
 var TRACE = [];
 
@@ -43,8 +34,7 @@ function polar_to_cartesian(r, a) {
   return { x: x, y: y };
 }
 function calculate_fourier() {
-  COEFFS_POSITIVES = [];
-  COEFFS_NEGATIVES = [];
+  COEFFS = [];
   var x = 0;
   var y = 0;
   for (let i = 0; i < PTS.length; i++) {
@@ -55,19 +45,23 @@ function calculate_fourier() {
   x /= PTS.length;
   y /= PTS.length;
   const p = cartesian_to_polar(x, y);
-  COEFFS_POSITIVES.push({ r: p.r, a: p.a, k: 0 });
-  COEFFS_NEGATIVES.push({ r: 0, a: 0, k: 0 });
+  COEFFS.push({ r: p.r, a: p.a, k: 0 });
+  var c = 1;
   for (
-    let i = 1;
-    (i < Number(number_fourier_min.value) + 1) & (i < PTS.length);
-    i++
+    let k = -Number(number_fourier_min.value);
+    (k <= Number(number_fourier_max.value)) & (c < PTS.length);
+    k++
   ) {
+    if (k == 0) {
+      continue;
+    }
+    c += 1;
     var x = 0;
     var y = 0;
-    for (let j = 0; j < PTS.length; j++) {
-      const point = PTS[j];
+    for (let i = 0; i < PTS.length; i++) {
+      const point = PTS[i];
       var point_pol = cartesian_to_polar(point.x, point.y);
-      point_pol.a += i * (j / PTS.length) * 2 * Math.PI;
+      point_pol.a += k * (i / PTS.length) * 2 * Math.PI;
       var point_cart = polar_to_cartesian(point_pol.r, point_pol.a);
       x += point_cart.x;
       y += point_cart.y;
@@ -75,28 +69,7 @@ function calculate_fourier() {
     x /= PTS.length;
     y /= PTS.length;
     const p = cartesian_to_polar(x, y);
-    COEFFS_NEGATIVES.push({ r: p.r, a: p.a, k: -i });
-  }
-  for (
-    let i = 1;
-    (i < Number(number_fourier_max.value) + 1) &
-    (i + Number(number_fourier_min.value) < PTS.length);
-    i++
-  ) {
-    var x = 0;
-    var y = 0;
-    for (let j = 0; j < PTS.length; j++) {
-      const point = PTS[j];
-      var point_pol = cartesian_to_polar(point.x, point.y);
-      point_pol.a -= i * (j / PTS.length) * 2 * Math.PI;
-      var point_cart = polar_to_cartesian(point_pol.r, point_pol.a);
-      x += point_cart.x;
-      y += point_cart.y;
-    }
-    x /= PTS.length;
-    y /= PTS.length;
-    const p = cartesian_to_polar(x, y);
-    COEFFS_POSITIVES.push({ r: p.r, a: p.a, k: i });
+    COEFFS.push({ r: p.r, a: p.a, k: k });
   }
   TRACE = [];
 }
@@ -161,9 +134,16 @@ function changed_min() {
     Number(number_fourier_min.value) + Number(number_fourier_max.value) + 1 >
     PTS.length
   ) {
-    number_fourier_max.value =
-      PTS.length - Number(number_fourier_min.value) - 1;
-    range_fourier_max.value = number_fourier_max.value;
+    const new_max = PTS.length - Number(number_fourier_min.value) - 1;
+    if (new_max < 0) {
+      number_fourier_max.value = 0;
+      range_fourier_max.value = 0;
+      changed_max();
+    } else {
+      number_fourier_max.value = new_max;
+      range_fourier_max.value = new_max;
+      calculate_fourier();
+    }
   }
   calculate_fourier();
 }
@@ -173,9 +153,16 @@ function changed_max() {
     Number(number_fourier_min.value) + Number(number_fourier_max.value) + 1 >
     PTS.length
   ) {
-    number_fourier_min.value =
-      PTS.length - Number(number_fourier_max.value) - 1;
-    range_fourier_min.value = number_fourier_min.value;
+    const new_min = PTS.length - Number(number_fourier_max.value) - 1;
+    if (new_min < 0) {
+      number_fourier_min.value = 0;
+      range_fourier_min.value = 0;
+      changed_min();
+    } else {
+      number_fourier_min.value = new_min;
+      range_fourier_min.value = new_min;
+      calculate_fourier();
+    }
   }
   calculate_fourier();
 }
@@ -219,46 +206,12 @@ function plot(t) {
   ctx.lineWidth = 2;
   ctx.moveTo(x, y);
   ctx.beginPath();
-  for (let i = 0; i < COEFFS_POSITIVES.length; i++) {
-    const coef = COEFFS_POSITIVES[i];
+  for (let i = 0; i < COEFFS.length; i++) {
+    const coef = COEFFS[i];
     x += coef.r * Math.cos(coef.k * t + coef.a);
     y += coef.r * Math.sin(coef.k * t + coef.a);
     ctx.lineTo(x, y);
   }
-  for (let i = 0; i < COEFFS_NEGATIVES.length; i++) {
-    const coef = COEFFS_NEGATIVES[i];
-    x += coef.r * Math.cos(coef.k * t + coef.a);
-    y += coef.r * Math.sin(coef.k * t + coef.a);
-    ctx.lineTo(x, y);
-  }
-  // var i = 0;
-  // for (
-  //   i = 0;
-  //   i < Math.min(COEFFS_POSITIVES.length, COEFFS_NEGATIVES.length);
-  //   i++
-  // ) {
-  //   const coef_positive = COEFFS_POSITIVES[i];
-  //   const coef_negative = COEFFS_NEGATIVES[i];
-  //   x += coef_positive.r * Math.cos(i * t + coef_positive.a);
-  //   y += coef_positive.r * Math.sin(i * t + coef_positive.a);
-  //   ctx.lineTo(x, y);
-  //   x += coef_negative.r * Math.cos(-i * t + coef_negative.a);
-  //   y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
-  //   ctx.lineTo(x, y);
-  // }
-  // for (; i < COEFFS_POSITIVES.length; i++) {
-  //   const coef_positive = COEFFS_POSITIVES[i];
-  //   x += coef_positive.r * Math.cos(i * t + coef_positive.a);
-  //   y += coef_positive.r * Math.sin(i * t + coef_positive.a);
-  //   ctx.lineTo(x, y);
-  // }
-  // for (; i < COEFFS_NEGATIVES.length; i++) {
-  //   const coef_negative = COEFFS_NEGATIVES[i];
-  //   x += coef_negative.r * Math.cos(-i * t + coef_negative.a);
-  //   y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
-  //   ctx.lineTo(x, y);
-  // }
-
   ctx.stroke();
   TRACE.push({ x: x, y: y });
   if (TRACE.length > (2 * Math.PI) / 0.01) {
