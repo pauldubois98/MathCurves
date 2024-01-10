@@ -155,6 +155,7 @@ function trace() {
   ctx.fillStyle = "black";
   var k = 0;
   for (const point of TRACE) {
+    ctx.fillStyle = `rgba(0,0,0,${k / TRACE.length})`;
     ctx.beginPath();
     ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI);
     ctx.fill();
@@ -182,6 +183,9 @@ function plot(t) {
   }
   ctx.stroke();
   TRACE.push({ x: x, y: y });
+  if (TRACE.length > (2 * Math.PI/0.02)) {
+    TRACE.shift();
+  }
 }
 
 function render() {
@@ -195,7 +199,6 @@ function animate() {
   T += 0.02;
   if (T > 2 * Math.PI) {
     T -= 2 * Math.PI;
-    TRACE = [];
   }
   render();
 }
