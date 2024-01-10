@@ -13,13 +13,13 @@ var PTS = [
 ];
 var COEFFS_POSITIVES = [
   { r: 0, a: 0 },
-  { r: 50, a: 1 },
-  { r: 20, a: 2 },
+  { r: 100, a: 1 },
+  { r: 40, a: 2 },
 ];
 var COEFFS_NEGATIVES = [
   { r: 0, a: 0 },
-  { r: 40, a: 3 },
-  { r: 10, a: 0 },
+  { r: 80, a: 3 },
+  { r: 20, a: 0 },
 ];
 var T = 0;
 
@@ -99,3 +99,15 @@ function plot(t) {
     ctx.lineTo(x, y);
   }
 }
+
+function animate() {
+  T += 0.02;
+  if (T > 2 * Math.PI) {
+    T -= 2 * Math.PI;
+  }
+  render();
+  plot(T);
+  ctx.stroke();
+}
+
+setInterval(animate, 20);
