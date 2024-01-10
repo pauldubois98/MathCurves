@@ -153,6 +153,18 @@ canvas.addEventListener("pointerup", function (evt) {
   }
 });
 
+function changed_min() {
+  if (
+    Number(number_fourier_min.value) + Number(number_fourier_max.value) + 1 >
+    PTS.length
+  ) {
+    number_fourier_max.value =
+      PTS.length - Number(number_fourier_min.value) - 1;
+    range_fourier_max.value = number_fourier_max.value;
+  }
+  calculate_fourier();
+}
+
 // plotting functions //
 function points() {
   if (PTS.length == 0) {
