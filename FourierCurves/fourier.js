@@ -166,6 +166,7 @@ function changed_max() {
   }
   calculate_fourier();
 }
+changed_max();
 
 // plotting functions //
 function points() {
