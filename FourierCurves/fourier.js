@@ -21,6 +21,7 @@ var COEFFS_NEGATIVES = [
   { r: 80, a: 3 },
   { r: 20, a: 0 },
 ];
+var COEF_LENGTH = 3;
 var T = 0;
 var TRACE = [];
 
@@ -48,6 +49,36 @@ function calculate_fourier() {
   y /= PTS.length;
   COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
   COEFFS_NEGATIVES.push({ r: 0, a: 0 });
+  for (let i = 1; i < COEF_LENGTH; i++) {
+    var x = 0;
+    var y = 0;
+    for (let j = 0; j < PTS.length; j++) {
+      const point = PTS[j];
+      var point_pol = cartesian_to_polar(point.x, point.y);
+      point_pol.a -= i * (j / PTS.length) * 2 * Math.PI;
+      var point_cart = polar_to_cartesian(point_pol.r, point_pol.a);
+      x += point_cart.x;
+      y += point_cart.y;
+    }
+    x /= PTS.length;
+    y /= PTS.length;
+    COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
+    var x = 0;
+
+    var x = 0;
+    var y = 0;
+    for (let j = 0; j < PTS.length; j++) {
+      const point = PTS[j];
+      var point_pol = cartesian_to_polar(point.x, point.y);
+      point_pol.a += i * (j / PTS.length) * 2 * Math.PI;
+      var point_cart = polar_to_cartesian(point_pol.r, point_pol.a);
+      x += point_cart.x;
+      y += point_cart.y;
+    }
+    x /= PTS.length;
+    y /= PTS.length;
+    COEFFS_NEGATIVES.push(cartesian_to_polar(x, y));
+  }
 }
 calculate_fourier();
 
