@@ -87,6 +87,9 @@ function calculate_fourier() {
 calculate_fourier();
 
 function points() {
+  if (PTS.length == 0) {
+    return;
+  }
   ctx.lineWidth = 1;
   ctx.strokeStyle = "grey";
   ctx.beginPath();
