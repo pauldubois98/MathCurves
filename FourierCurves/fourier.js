@@ -123,23 +123,33 @@ function get_mouse_pos(canvas, evt) {
 }
 canvas.addEventListener("pointerdown", function (evt) {
   var mousePos = get_mouse_pos(canvas, evt);
-  mouse_down = false;
-  for (let i = 0; i < PTS.length; i++) {
-    if ((PTS[i].x - mousePos.x) ** 2 + (PTS[i].y - mousePos.y) ** 2 < 100) {
-      mouse_point = i;
+  if (!checkbox_delete_mode.checked) {
+    for (let i = 0; i < PTS.length; i++) {
+      if ((PTS[i].x - mousePos.x) ** 2 + (PTS[i].y - mousePos.y) ** 2 < 100) {
+        mouse_point = i;
+        mouse_down = true;
+      }
+    }
+    if (!mouse_down) {
+      PTS.push(mousePos);
       mouse_down = true;
+      mouse_point = PTS.length - 1;
+    }
+    points();
+  } else {
+    for (let i = 0; i < PTS.length; i++) {
+      if ((PTS[i].x - mousePos.x) ** 2 + (PTS[i].y - mousePos.y) ** 2 < 100) {
+        PTS.splice(i, 1);
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        points();
+        calculate_fourier();
+      }
     }
   }
-  if (!mouse_down) {
-    PTS.push(mousePos);
-    mouse_down = true;
-    mouse_point = PTS.length - 1;
-  }
-  points();
 });
 
 canvas.addEventListener("pointermove", function (evt) {
-  if (mouse_down) {
+  if (mouse_down & !checkbox_delete_mode.checked) {
     var mousePos = get_mouse_pos(canvas, evt);
     PTS[mouse_point] = mousePos;
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -148,10 +158,13 @@ canvas.addEventListener("pointermove", function (evt) {
 });
 
 canvas.addEventListener("pointerup", function (evt) {
-  mouse_down = false;
-  prev_mousePos = undefined;
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
-  points();
+  if (mouse_down & !checkbox_delete_mode.checked) {
+    mouse_down = false;
+    prev_mousePos = undefined;
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    points();
+    calculate_fourier();
+  }
 });
 
 function trace() {
@@ -186,7 +199,7 @@ function plot(t) {
   }
   ctx.stroke();
   TRACE.push({ x: x, y: y });
-  if (TRACE.length > (2 * Math.PI) / 0.02) {
+  if (TRACE.length > (2 * Math.PI) / 0.01) {
     TRACE.shift();
   }
 }
@@ -199,11 +212,11 @@ function render() {
 }
 
 function animate() {
-  T += 0.02;
+  T += 0.01;
   if (T > 2 * Math.PI) {
     T -= 2 * Math.PI;
   }
   render();
 }
 
-setInterval(animate, 20);
+setInterval(animate, 10);

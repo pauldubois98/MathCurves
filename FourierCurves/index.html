@@ -16,7 +16,10 @@
             <input type="number" id="number_fourier" min="1" max="20" value="5"
                 oninput="range_fourier.value =number_fourier.value; calculate_fourier();">
         </div>
-
+        <div>
+            <input type="checkbox" id="checkbox_delete_mode">
+            <label for="checkbox_delete_mode">Delete Mode</label>
+        </div>
     </div>
     <canvas id="fourier-canvas" height="650" width="650"></canvas>
 </body>
