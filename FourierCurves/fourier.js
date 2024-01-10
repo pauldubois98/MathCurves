@@ -5,11 +5,18 @@ var ctx = canvas.getContext("2d");
 var mouse_down = false;
 var mouse_point = undefined;
 var PTS = [
-  { x: 50, y: 100 },
-  { x: 100, y: 50 },
-  { x: 150, y: 100 },
-  { x: 200, y: 50 },
-  { x: 250, y: 100 },
+  { x: 100, y: 200 },
+  { x: 150, y: 150 },
+  { x: 200, y: 100 },
+  { x: 250, y: 150 },
+  { x: 300, y: 200 },
+  { x: 350, y: 150 },
+  { x: 400, y: 100 },
+  { x: 450, y: 150 },
+  { x: 500, y: 200 },
+  { x: 400, y: 300 },
+  { x: 300, y: 400 },
+  { x: 200, y: 300 },
 ];
 var COEFFS_POSITIVES = [
   { r: (WIDTH ** 2 + HEIGHT ** 2) ** 0.5 / 2, a: +Math.PI / 4 },
