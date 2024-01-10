@@ -31,6 +31,8 @@ var COEFFS_NEGATIVES = [
 var T = 0;
 var TRACE = [];
 
+
+// calculation functions //
 function cartesian_to_polar(x, y) {
   var r = (x ** 2 + y ** 2) ** 0.5;
   var a = Math.atan2(y, x);
@@ -93,37 +95,7 @@ function calculate_fourier() {
 }
 calculate_fourier();
 
-function points() {
-  if (PTS.length == 0) {
-    return;
-  }
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = "grey";
-  ctx.beginPath();
-  ctx.moveTo(PTS[0].x, PTS[0].y);
-  for (let i = 1; i < PTS.length; i++) {
-    ctx.lineTo(PTS[i].x, PTS[i].y);
-  }
-  ctx.lineTo(PTS[0].x, PTS[0].y);
-  ctx.stroke();
-  ctx.closePath();
-  ctx.fillStyle = "black";
-  for (let i = 0; i < PTS.length; i++) {
-    ctx.beginPath();
-    ctx.arc(PTS[i].x, PTS[i].y, 5, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();
-    if (mouse_down && i == mouse_point) {
-      ctx.strokeStyle = "grey";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(PTS[i].x, PTS[i].y, 7, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.closePath();
-    }
-  }
-}
-
+// event listeners //
 function get_mouse_pos(canvas, evt) {
   var rect = canvas.getBoundingClientRect();
   return {
@@ -177,16 +149,36 @@ canvas.addEventListener("pointerup", function (evt) {
   }
 });
 
-function trace() {
+
+// plotting functions //
+function points() {
+  if (PTS.length == 0) {
+    return;
+  }
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "grey";
+  ctx.beginPath();
+  ctx.moveTo(PTS[0].x, PTS[0].y);
+  for (let i = 1; i < PTS.length; i++) {
+    ctx.lineTo(PTS[i].x, PTS[i].y);
+  }
+  ctx.lineTo(PTS[0].x, PTS[0].y);
+  ctx.stroke();
+  ctx.closePath();
   ctx.fillStyle = "black";
-  var k = 0;
-  for (const point of TRACE) {
-    ctx.fillStyle = `rgba(255,0,0,${k / TRACE.length})`;
+  for (let i = 0; i < PTS.length; i++) {
     ctx.beginPath();
-    ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+    ctx.arc(PTS[i].x, PTS[i].y, 5, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
-    k += 1;
+    if (mouse_down && i == mouse_point) {
+      ctx.strokeStyle = "grey";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(PTS[i].x, PTS[i].y, 7, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.closePath();
+    }
   }
 }
 
@@ -211,6 +203,19 @@ function plot(t) {
   TRACE.push({ x: x, y: y });
   if (TRACE.length > (2 * Math.PI) / 0.01) {
     TRACE.shift();
+  }
+}
+
+function trace() {
+  ctx.fillStyle = "black";
+  var k = 0;
+  for (const point of TRACE) {
+    ctx.fillStyle = `rgba(255,0,0,${k / TRACE.length})`;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+    k += 1;
   }
 }
 
