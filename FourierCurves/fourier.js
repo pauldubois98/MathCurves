@@ -49,7 +49,7 @@ function calculate_fourier() {
   y /= PTS.length;
   COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
   COEFFS_NEGATIVES.push({ r: 0, a: 0 });
-  for (let i = 1; i < COEF_LENGTH; i++) {
+  for (let i = 1; (i < COEF_LENGTH) & (i < PTS.length - 1); i++) {
     var x = 0;
     var y = 0;
     for (let j = 0; j < PTS.length; j++) {
