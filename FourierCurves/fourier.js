@@ -57,7 +57,7 @@ function calculate_fourier() {
   COEFFS_NEGATIVES.push({ r: 0, a: 0 });
   for (
     let i = 1;
-    (i < Number(number_fourier.value)) & (i < PTS.length - 1);
+    (i < Number(number_fourier.value)) & (i < PTS.length / 2);
     i++
   ) {
     var x = 0;
