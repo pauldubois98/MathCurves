@@ -110,14 +110,14 @@ function points() {
   ctx.fillStyle = "black";
   for (let i = 0; i < PTS.length; i++) {
     ctx.beginPath();
-    ctx.arc(PTS[i].x, PTS[i].y, 4, 0, 2 * Math.PI);
+    ctx.arc(PTS[i].x, PTS[i].y, 5, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
     if (mouse_down && i == mouse_point) {
       ctx.strokeStyle = "grey";
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(PTS[i].x, PTS[i].y, 6, 0, 2 * Math.PI);
+      ctx.arc(PTS[i].x, PTS[i].y, 7, 0, 2 * Math.PI);
       ctx.stroke();
       ctx.closePath();
     }
@@ -181,9 +181,9 @@ function trace() {
   ctx.fillStyle = "black";
   var k = 0;
   for (const point of TRACE) {
-    ctx.fillStyle = `rgba(0,0,0,${k / TRACE.length})`;
+    ctx.fillStyle = `rgba(255,0,0,${k / TRACE.length})`;
     ctx.beginPath();
-    ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI);
+    ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
     k += 1;
