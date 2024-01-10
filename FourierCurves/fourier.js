@@ -23,8 +23,7 @@ var COEFFS_NEGATIVES = [
 ];
 var T = 0;
 
-function render() {
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+function points() {
   ctx.fillStyle = "black";
   for (let i = 0; i < PTS.length; i++) {
     ctx.beginPath();
@@ -41,7 +40,6 @@ function render() {
     }
   }
 }
-render();
 
 function get_mouse_pos(canvas, evt) {
   var rect = canvas.getBoundingClientRect();
@@ -64,21 +62,23 @@ canvas.addEventListener("pointerdown", function (evt) {
     mouse_down = true;
     mouse_point = PTS.length - 1;
   }
-  render();
+  points();
 });
 
 canvas.addEventListener("pointermove", function (evt) {
   if (mouse_down) {
     var mousePos = get_mouse_pos(canvas, evt);
     PTS[mouse_point] = mousePos;
-    render();
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    points();
   }
 });
 
 canvas.addEventListener("pointerup", function (evt) {
   mouse_down = false;
   prev_mousePos = undefined;
-  render();
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+  points();
 });
 
 function plot(t) {
@@ -98,6 +98,13 @@ function plot(t) {
     y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
     ctx.lineTo(x, y);
   }
+  ctx.stroke();
+}
+
+function render() {
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+  points();
+  plot(T);
 }
 
 function animate() {
@@ -106,8 +113,6 @@ function animate() {
     T -= 2 * Math.PI;
   }
   render();
-  plot(T);
-  ctx.stroke();
 }
 
 setInterval(animate, 20);
