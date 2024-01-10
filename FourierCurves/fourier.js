@@ -57,11 +57,11 @@ canvas.addEventListener("pointerdown", function (evt) {
 });
 
 canvas.addEventListener("pointermove", function (evt) {
-  var mousePos = get_mouse_pos(canvas, evt);
   if (mouse_down) {
+    var mousePos = get_mouse_pos(canvas, evt);
     PTS[mouse_point] = mousePos;
+    render();
   }
-  render();
 });
 
 canvas.addEventListener("pointerup", function (evt) {
