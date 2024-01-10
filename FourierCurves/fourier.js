@@ -31,7 +31,6 @@ var COEFFS_NEGATIVES = [
 var T = 0;
 var TRACE = [];
 
-
 // calculation functions //
 function cartesian_to_polar(x, y) {
   var r = (x ** 2 + y ** 2) ** 0.5;
@@ -59,7 +58,27 @@ function calculate_fourier() {
   COEFFS_NEGATIVES.push({ r: 0, a: 0 });
   for (
     let i = 1;
-    (i < Number(number_fourier.value)) & (i < PTS.length / 2);
+    (i < Number(number_fourier_min.value)) & (i < PTS.length);
+    i++
+  ) {
+    var x = 0;
+    var y = 0;
+    for (let j = 0; j < PTS.length; j++) {
+      const point = PTS[j];
+      var point_pol = cartesian_to_polar(point.x, point.y);
+      point_pol.a += i * (j / PTS.length) * 2 * Math.PI;
+      var point_cart = polar_to_cartesian(point_pol.r, point_pol.a);
+      x += point_cart.x;
+      y += point_cart.y;
+    }
+    x /= PTS.length;
+    y /= PTS.length;
+    COEFFS_NEGATIVES.push(cartesian_to_polar(x, y));
+  }
+  for (
+    let i = 1;
+    (i < Number(number_fourier_max.value)) &
+    (i - 1 + Number(number_fourier_min.value) < PTS.length);
     i++
   ) {
     var x = 0;
@@ -75,21 +94,6 @@ function calculate_fourier() {
     x /= PTS.length;
     y /= PTS.length;
     COEFFS_POSITIVES.push(cartesian_to_polar(x, y));
-    var x = 0;
-
-    var x = 0;
-    var y = 0;
-    for (let j = 0; j < PTS.length; j++) {
-      const point = PTS[j];
-      var point_pol = cartesian_to_polar(point.x, point.y);
-      point_pol.a += i * (j / PTS.length) * 2 * Math.PI;
-      var point_cart = polar_to_cartesian(point_pol.r, point_pol.a);
-      x += point_cart.x;
-      y += point_cart.y;
-    }
-    x /= PTS.length;
-    y /= PTS.length;
-    COEFFS_NEGATIVES.push(cartesian_to_polar(x, y));
   }
   TRACE = [];
 }
@@ -149,7 +153,6 @@ canvas.addEventListener("pointerup", function (evt) {
   }
 });
 
-
 // plotting functions //
 function points() {
   if (PTS.length == 0) {
@@ -189,7 +192,12 @@ function plot(t) {
   ctx.lineWidth = 2;
   ctx.moveTo(x, y);
   ctx.beginPath();
-  for (let i = 0; i < COEFFS_POSITIVES.length; i++) {
+  var i = 0;
+  for (
+    i = 0;
+    i < Math.min(COEFFS_POSITIVES.length, COEFFS_NEGATIVES.length);
+    i++
+  ) {
     const coef_positive = COEFFS_POSITIVES[i];
     const coef_negative = COEFFS_NEGATIVES[i];
     x += coef_positive.r * Math.cos(i * t + coef_positive.a);
@@ -199,6 +207,19 @@ function plot(t) {
     y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
     ctx.lineTo(x, y);
   }
+  for (; i < COEFFS_POSITIVES.length; i++) {
+    const coef_positive = COEFFS_POSITIVES[i];
+    x += coef_positive.r * Math.cos(i * t + coef_positive.a);
+    y += coef_positive.r * Math.sin(i * t + coef_positive.a);
+    ctx.lineTo(x, y);
+  }
+  for (; i < COEFFS_NEGATIVES.length; i++) {
+    const coef_negative = COEFFS_NEGATIVES[i];
+    x += coef_negative.r * Math.cos(-i * t + coef_negative.a);
+    y += coef_negative.r * Math.sin(-i * t + coef_negative.a);
+    ctx.lineTo(x, y);
+  }
+
   ctx.stroke();
   TRACE.push({ x: x, y: y });
   if (TRACE.length > (2 * Math.PI) / 0.01) {

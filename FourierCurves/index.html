@@ -11,10 +11,16 @@
     <h1>Fourier Curves</h1>
     <div id="controls">
         <div>
-            <input type="range" id="range_fourier" min="1" max="20" value="5"
-                oninput="number_fourier.value = range_fourier.value; calculate_fourier();">
-            <input type="number" id="number_fourier" min="1" max="20" value="5"
-                oninput="range_fourier.value =number_fourier.value; calculate_fourier();">
+            <input type="range" id="range_fourier_min" min="1" max="20" value="5"
+                oninput="number_fourier_min.value = range_fourier_min.value; calculate_fourier();">
+            <input type="number" id="number_fourier_min" min="1" max="20" value="5"
+                oninput="range_fourier_min.value = number_fourier_min.value; calculate_fourier();">
+        </div>
+        <div>
+            <input type="range" id="range_fourier_max" min="1" max="20" value="5"
+                oninput="number_fourier_max.value = range_fourier_max.value; calculate_fourier();">
+            <input type="number" id="number_fourier_max" min="1" max="20" value="5"
+                oninput="range_fourier_max.value =number_fourier_max.value; calculate_fourier();">
         </div>
         <div>
             <button id="btn_delete_all" onclick="PTS = []; calculate_fourier();">Delete all points</button>
