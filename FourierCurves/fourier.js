@@ -129,7 +129,31 @@ canvas.addEventListener("pointerup", function (evt) {
   }
 });
 
+function changed_symmetric() {
+  if (symmetric_coef.checked) {
+    const new_val = Math.floor(
+      (Number(number_fourier_min.value) + Number(number_fourier_max.value)) / 2
+    );
+    number_fourier_min.value = new_val;
+    range_fourier_min.value = new_val;
+    number_fourier_max.value = new_val;
+    range_fourier_max.value = new_val;
+    calculate_fourier();
+  }
+}
 function changed_min() {
+  if (symmetric_coef.checked) {
+    const new_val = Math.min(
+      Number(number_fourier_min.value),
+      Math.floor((PTS.length - 1) / 2)
+    );
+    number_fourier_min.value = new_val;
+    range_fourier_min.value = new_val;
+    number_fourier_max.value = new_val;
+    range_fourier_max.value = new_val;
+    calculate_fourier();
+    return;
+  }
   if (
     Number(number_fourier_min.value) + Number(number_fourier_max.value) + 1 >
     PTS.length
@@ -149,6 +173,18 @@ function changed_min() {
 }
 
 function changed_max() {
+  if (symmetric_coef.checked) {
+    const new_val = Math.min(
+      Number(number_fourier_max.value),
+      Math.floor((PTS.length - 1) / 2)
+    );
+    number_fourier_min.value = new_val;
+    range_fourier_min.value = new_val;
+    number_fourier_max.value = new_val;
+    range_fourier_max.value = new_val;
+    calculate_fourier();
+    return;
+  }
   if (
     Number(number_fourier_min.value) + Number(number_fourier_max.value) + 1 >
     PTS.length
