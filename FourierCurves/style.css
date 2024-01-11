@@ -15,11 +15,15 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0.5em;
+}
+#controls div div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.25em;
 }
 
 label{
-    width: 10em;
     text-align: right;
 }
 input[type=number]{
@@ -29,7 +33,12 @@ input[type=range]{
     margin-left: 0.5em;
     margin-right: 0.5em;
 }
-
+#symmetric_coef{
+    margin-left: 1em;
+}
+#points_edits{
+    margin-top: 1em;
+}
 #fourier-canvas{
     border: 1px solid black;
 }

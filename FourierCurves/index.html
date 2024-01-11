@@ -11,20 +11,26 @@
     <h1>Fourier Curves</h1>
     <div id="controls">
         <div>
-            <label for="range_fourier_min">Negative coefficients: </label>
-            <input type="range" id="range_fourier_min" min="0" max="15" value="5"
-                oninput="number_fourier_min.value = range_fourier_min.value; changed_min();">
-            <input type="number" id="number_fourier_min" min="0" max="25" value="5"
-                oninput="range_fourier_min.value = number_fourier_min.value; changed_min();">
+            <div>
+                <label for="range_fourier_min">Negative coefficients: </label>
+                <label for="range_fourier_max">Positive coefficients: </label>
+            </div>
+            <div>
+                <input type="range" id="range_fourier_min" min="0" max="15" value="5"
+                    oninput="number_fourier_min.value = range_fourier_min.value; changed_min();">
+                <input type="range" id="range_fourier_max" min="0" max="15" value="5"
+                    oninput="number_fourier_max.value = range_fourier_max.value; changed_max();">
+            </div>
+            <div>
+                <input type="number" id="number_fourier_min" min="0" max="25" value="5"
+                    oninput="range_fourier_min.value = number_fourier_min.value; changed_min();">
+                <input type="number" id="number_fourier_max" min="0" max="25" value="5"
+                    oninput="range_fourier_max.value =number_fourier_max.value; changed_max();">
+            </div>
+            <input type="checkbox" id="symmetric_coef" checked>
+            <label for="symmetric_coef">Symmetric coefficients</label>
         </div>
-        <div>
-            <label for="range_fourier_max">Positive coefficients: </label>
-            <input type="range" id="range_fourier_max" min="0" max="15" value="5"
-                oninput="number_fourier_max.value = range_fourier_max.value; changed_max();">
-            <input type="number" id="number_fourier_max" min="0" max="25" value="5"
-                oninput="range_fourier_max.value =number_fourier_max.value; changed_max();">
-        </div>
-        <div>
+        <div id="points_edits">
             <button id="btn_delete_all" onclick="PTS = []; calculate_fourier();">Delete all points</button>
             <input type="checkbox" id="checkbox_delete_mode">
             <label for="checkbox_delete_mode">Delete Mode</label>
