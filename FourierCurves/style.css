@@ -8,7 +8,6 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 1em;
 }
 
 #controls div{
@@ -41,4 +40,8 @@ input[type=range]{
 }
 #fourier-canvas{
     border: 1px solid black;
+}
+canvas{
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
