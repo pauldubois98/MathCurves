@@ -113,6 +113,14 @@ canvas.addEventListener("pointerdown", function (evt) {
 canvas.addEventListener("pointermove", function (evt) {
   if (mouse_down & !checkbox_delete_mode.checked) {
     var mousePos = get_mouse_pos(canvas, evt);
+    if (evt.shiftKey) {
+      mousePos.x = mousePos.x - (mousePos.x % 10);
+      mousePos.y = mousePos.y - (mousePos.y % 10);
+    }
+    if (evt.ctrlKey) {
+      mousePos.x = mousePos.x - (mousePos.x % 50);
+      mousePos.y = mousePos.y - (mousePos.y % 50);
+    }
     PTS[mouse_point] = mousePos;
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     points();
@@ -121,6 +129,16 @@ canvas.addEventListener("pointermove", function (evt) {
 
 canvas.addEventListener("pointerup", function (evt) {
   if (mouse_down & !checkbox_delete_mode.checked) {
+    var mousePos = get_mouse_pos(canvas, evt);
+    if (evt.shiftKey) {
+      mousePos.x = mousePos.x - (mousePos.x % 10);
+      mousePos.y = mousePos.y - (mousePos.y % 10);
+    }
+    if (evt.ctrlKey) {
+      mousePos.x = mousePos.x - (mousePos.x % 50);
+      mousePos.y = mousePos.y - (mousePos.y % 50);
+    }
+    PTS[mouse_point] = mousePos;
     mouse_down = false;
     prev_mousePos = undefined;
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
