@@ -318,3 +318,13 @@ function save() {
     window.location.replace(new_url);
   }, 1000);
 }
+
+const URL_PARAMS = new URLSearchParams(window.location.search);
+if (URL_PARAMS.get("POINTS") !== null) {
+  PTS = eval(URL_PARAMS.get("POINTS"));
+  setTimeout(function () {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    points();
+    calculate_fourier();
+  }, 100);
+}
