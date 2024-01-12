@@ -303,3 +303,18 @@ function animate() {
 }
 
 setInterval(animate, 10);
+
+/* URL params */
+function save() {
+  var params = "";
+  params += "POINTS=[";
+  PTS.forEach((pt) => {
+    params += `{x:${Math.round(pt.x)},y:${Math.round(pt.y)}},`;
+  });
+  params += "]";
+  var old_url = window.location.href.split("?")[0];
+  new_url = old_url + "?" + params;
+  setTimeout(function () {
+    window.location.replace(new_url);
+  }, 1000);
+}
