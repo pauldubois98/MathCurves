@@ -141,6 +141,37 @@ canvas.addEventListener("pointerup", function (evt) {
     PTS[mouse_point] = mousePos;
     mouse_down = false;
     prev_mousePos = undefined;
+    if (symmetric_coef.checked) {
+      const new_val = Math.min(
+        Number(number_fourier_min.value),
+        Math.floor((PTS.length - 1) / 2)
+      );
+      number_fourier_min.value = new_val;
+      range_fourier_min.value = new_val;
+      number_fourier_max.value = new_val;
+      range_fourier_max.value = new_val;
+    } else {
+      if (
+        Number(number_fourier_min.value) +
+          Number(number_fourier_max.value) +
+          1 >
+        PTS.length
+      ) {
+        const new_max = PTS.length - Number(number_fourier_min.value) - 1;
+        if (new_max >= 0) {
+          number_fourier_max.value = new_max;
+          range_fourier_max.value = new_max;
+        } else {
+          number_fourier_max.value = 0;
+          range_fourier_max.value = 0;
+          if (Number(number_fourier_min.value) + 1 > PTS.length) {
+            const new_min = PTS.length - 1;
+            number_fourier_min.value = new_min;
+            range_fourier_min.value = new_min;
+          }
+        }
+      }
+    }
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     points();
     calculate_fourier();
