@@ -383,3 +383,12 @@ if (URL_PARAMS.get("POINTS") !== null) {
     calculate_fourier();
   }, 100);
 }
+
+function export_coef() {
+  for (let i = 0; i < COEFFS.length; i++) {
+    const coef = COEFFS[i];
+    const coef_r = Math.round(coef.r);
+    const coef_a = Math.round((coef.a * 180) / Math.PI);
+    console.log(`{k:${coef.k},r:${coef_r},a:${coef_a}}`);
+  }
+}
