@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fourier Curves</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Fourier Curves</h1>
+    <div id="controls">
+        <div>
+            <div>
+                <label for="range_fourier_min">Negative coefficients: </label>
+                <label for="range_fourier_max">Positive coefficients: </label>
+            </div>
+            <div>
+                <input type="range" id="range_fourier_min" min="0" max="15" value="5"
+                    oninput="number_fourier_min.value = range_fourier_min.value; changed_min();">
+                <input type="range" id="range_fourier_max" min="0" max="15" value="5"
+                    oninput="number_fourier_max.value = range_fourier_max.value; changed_max();">
+            </div>
+            <div>
+                <input type="number" id="number_fourier_min" min="0" max="25" value="5"
+                    oninput="range_fourier_min.value = number_fourier_min.value; changed_min();">
+                <input type="number" id="number_fourier_max" min="0" max="25" value="5"
+                    oninput="range_fourier_max.value =number_fourier_max.value; changed_max();">
+            </div>
+            <input type="checkbox" id="symmetric_coef" onchange="changed_symmetric();" checked>
+            <label for="symmetric_coef">Symmetric coefficients</label>
+        </div>
+        <div id="points_edits">
+            <button id="btn_delete_all" onclick="PTS = []; calculate_fourier();">Delete all points</button>
+        </div>
+    </div>
+    <canvas id="fourier-canvas" height="600" width="600"></canvas>
+    <button id="btn_save" onclick="save();">Save</button>
+</body>
+<script src="fourier_drawing.js"></script>
+
+</html>
