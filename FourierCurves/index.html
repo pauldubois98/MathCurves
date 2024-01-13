@@ -12,14 +12,12 @@
     <div id="controls">
         <div id="nb_coef">
             <div>
-                <label for="range_fourier_min">Negative coefficients: </label>
-                <label for="range_fourier_max">Positive coefficients: </label>
+                <label for="number_fourier_min">Negative coefficients: </label>
+                <label for="number_fourier_max">Positive coefficients: </label>
             </div>
             <div>
-                <input type="number" id="number_fourier_min" min="0" max="15" value="0"
-                    oninput="range_fourier_min.value = number_fourier_min.value; changed_coef();">
-                <input type="number" id="number_fourier_max" min="0" max="15" value="2"
-                    oninput="range_fourier_max.value =number_fourier_max.value; changed_coef();">
+                <input type="number" id="number_fourier_min" min="0" max="15" value="0" oninput="changed_coef();">
+                <input type="number" id="number_fourier_max" min="0" max="15" value="2" oninput="changed_coef();">
             </div>
             <input type="checkbox" id="symmetric_coef" onchange="changed_symmetric();">
             <label for="symmetric_coef">Symmetric coefficients</label>
