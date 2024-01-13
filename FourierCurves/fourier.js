@@ -50,7 +50,7 @@ function update_coef() {
     }
     const a = Number(document.getElementById("coef" + i + "a").value);
     const r = Number(document.getElementById("coef" + i + "r").value);
-    COEFFS.push({ r: r, a: a, k: i });
+    COEFFS.push({ r: r, a: (a * Math.PI) / 180, k: i });
   }
 }
 
