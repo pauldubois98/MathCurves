@@ -10,7 +10,7 @@ body{
     align-items: center;
 }
 
-#controls div{
+#nb_coef{
     display: flex;
     flex-direction: row;
     align-items: center;
