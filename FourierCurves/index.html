@@ -31,6 +31,8 @@
             <label for="symmetric_coef">Symmetric coefficients</label>
         </div>
         <div id="points_edits">
+            <button id="btn_add_pts" onclick="add_points(); calculate_fourier();">
+                Add points on middle of each segment</button>
             <button id="btn_delete_all" onclick="PTS = []; calculate_fourier();">Delete all points</button>
             <input type="checkbox" id="checkbox_delete_mode">
             <label for="checkbox_delete_mode">Delete Mode</label>
