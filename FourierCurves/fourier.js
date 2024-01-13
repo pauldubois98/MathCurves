@@ -178,6 +178,30 @@ canvas.addEventListener("pointerup", function (evt) {
   }
 });
 
+function add_points() {
+  var newPTS = [];
+  for (let i = 0; i < PTS.length; i++) {
+    const pt = PTS[i];
+    newPTS.push(pt);
+    if (i < PTS.length - 1) {
+      const next_pt = PTS[i + 1];
+      const middle_pt = {
+        x: (pt.x + next_pt.x) / 2,
+        y: (pt.y + next_pt.y) / 2,
+      };
+      newPTS.push(middle_pt);
+    } else {
+      const next_pt = PTS[0];
+      const middle_pt = {
+        x: (pt.x + next_pt.x) / 2,
+        y: (pt.y + next_pt.y) / 2,
+      };
+      newPTS.push(middle_pt);
+    }
+  }
+  PTS = newPTS;
+}
+
 function changed_symmetric() {
   if (symmetric_coef.checked) {
     const new_val = Math.floor(
