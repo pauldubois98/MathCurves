@@ -80,6 +80,73 @@ canvas.addEventListener("pointerdown", function (evt) {
 canvas.addEventListener("pointermove", function (evt) {
   if (mouse_down) {
     var mousePos = get_mouse_pos(canvas, evt);
+    var prev_mousePos = PTS[PTS.length - 1];
+    var x = prev_mousePos.x;
+    var y = prev_mousePos.y;
+    var dx = 0;
+    var dy = 0;
+
+    if (
+      Math.abs(mousePos.x - prev_mousePos.x) <
+      Math.abs(mousePos.y - prev_mousePos.y)
+    ) {
+      dx =
+        (mousePos.x - prev_mousePos.x) / Math.abs(mousePos.y - prev_mousePos.y);
+      if (mousePos.y - prev_mousePos.y > 0) {
+        dy = 1;
+      } else if (mousePos.y - prev_mousePos.y < 0) {
+        dy = -1;
+      }
+      var k = 0;
+      while (Math.abs(y - mousePos.y) > 0 && k < 1000) {
+        k += 1;
+        x += dx;
+        y += dy;
+        PTS.push({ x: Math.round(x + 0.5), y: y });
+      }
+    }
+    if (
+      Math.abs(mousePos.x - prev_mousePos.x) >
+      Math.abs(mousePos.y - prev_mousePos.y)
+    ) {
+      dy =
+        (mousePos.y - prev_mousePos.y) / Math.abs(mousePos.x - prev_mousePos.x);
+      if (mousePos.x - prev_mousePos.x > 0) {
+        dx = 1;
+      } else if (mousePos.x - prev_mousePos.x < 0) {
+        dx = -1;
+      }
+      var k = 0;
+      while (Math.abs(x - mousePos.x) > 0 && k < 1000) {
+        k += 1;
+        x += dx;
+        y += dy;
+        PTS.push({ x: x, y: Math.round(y + 0.5) });
+      }
+    }
+    if (
+      Math.abs(mousePos.x - prev_mousePos.x) ==
+      Math.abs(mousePos.y - prev_mousePos.y)
+    ) {
+      if (mousePos.x - prev_mousePos.x > 0) {
+        dx = 1;
+      } else if (mousePos.x - prev_mousePos.x < 0) {
+        dx = -1;
+      }
+      if (mousePos.y - prev_mousePos.y > 0) {
+        dy = 1;
+      } else if (mousePos.y - prev_mousePos.y < 0) {
+        dy = -1;
+      }
+      var k = 0;
+      while (Math.abs(x - mousePos.x) > 0 && k < 1000) {
+        k += 1;
+        x += dx;
+        y += dy;
+        PTS.push({ x: x, y: Math.round(y + 0.5) });
+      }
+    }
+
     PTS.push(mousePos);
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     points();
