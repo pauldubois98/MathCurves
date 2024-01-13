@@ -52,7 +52,21 @@ function component_summand(k) {
             </div>
           </div>`;
 }
-function changed_coef() {}
+function changed_coef() {
+  var html = "";
+  const min = -Number(number_fourier_min.value);
+  const max = Number(number_fourier_max.value);
+  for (let i = min; i <= max; i++) {
+    if (i === 0) {
+      continue;
+    }
+    html += component_summand(i);
+  }
+  document.getElementById("summands").innerHTML = html;
+  update_coef();
+}
+changed_coef();
+
 function update_coef() {
   TRACE = [];
   COEFFS = [{ r: 420, a: 0.78539816339, k: 0 }];
