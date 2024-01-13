@@ -79,8 +79,8 @@ calculate_fourier();
 function get_mouse_pos(canvas, evt) {
   var rect = canvas.getBoundingClientRect();
   return {
-    x: evt.clientX - rect.left,
-    y: evt.clientY - rect.top,
+    x: Math.round(evt.clientX - rect.left),
+    y: Math.round(evt.clientY - rect.top),
   };
 }
 canvas.addEventListener("pointerdown", function (evt) {
@@ -340,7 +340,7 @@ function save() {
   var params = "";
   params += "POINTS=[";
   PTS.forEach((pt) => {
-    params += `{x:${Math.round(pt.x)},y:${Math.round(pt.y)}},`;
+    params += `{x:${pt.x},y:${pt.y}},`;
   });
   params += "]";
   var old_url = window.location.href.split("?")[0];
