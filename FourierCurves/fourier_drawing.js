@@ -69,6 +69,64 @@ function get_mouse_pos(canvas, evt) {
     y: Math.round(evt.clientY - rect.top),
   };
 }
+function get_interpolation(pt1, pt2) {
+  var x = pt1.x;
+  var y = pt1.y;
+  var dx = 0;
+  var dy = 0;
+  var OUTPTS = [];
+  if (Math.abs(pt1.x - pt2.x) + Math.abs(pt1.y - pt2.y) <= 2) {
+    return OUTPTS;
+  }
+  if (Math.abs(pt1.x - pt2.x) < Math.abs(pt1.y - pt2.y)) {
+    dx = (pt2.x - pt1.x) / Math.abs(pt2.y - pt1.y);
+    if (pt2.y - pt1.y > 0) {
+      dy = 1;
+    } else if (pt2.y - pt1.y < 0) {
+      dy = -1;
+    }
+    var k = 0;
+    while (Math.abs(y - pt2.y) > 0 && k < 1000) {
+      k += 1;
+      x += dx;
+      y += dy;
+      OUTPTS.push({ x: Math.round(x + 0.5), y: y });
+    }
+  } else if (Math.abs(pt2.x - pt1.x) > Math.abs(pt2.y - pt1.y)) {
+    dy = (pt2.y - pt1.y) / Math.abs(pt2.x - pt1.x);
+    if (pt2.x - pt1.x > 0) {
+      dx = 1;
+    } else if (pt2.x - pt1.x < 0) {
+      dx = -1;
+    }
+    var k = 0;
+    while (Math.abs(x - pt2.x) > 0 && k < 1000) {
+      k += 1;
+      x += dx;
+      y += dy;
+      OUTPTS.push({ x: x, y: Math.round(y + 0.5) });
+    }
+  } else if (Math.abs(pt2.x - pt1.x) == Math.abs(pt2.y - pt1.y)) {
+    if (pt2.x - pt1.x > 0) {
+      dx = 1;
+    } else if (pt2.x - pt1.x < 0) {
+      dx = -1;
+    }
+    if (pt2.y - pt1.y > 0) {
+      dy = 1;
+    } else if (pt2.y - pt1.y < 0) {
+      dy = -1;
+    }
+    var k = 0;
+    while (Math.abs(x - pt2.x) > 0 && k < 1000) {
+      k += 1;
+      x += dx;
+      y += dy;
+      OUTPTS.push({ x: x, y: y });
+    }
+  }
+  return OUTPTS;
+}
 canvas.addEventListener("pointerdown", function (evt) {
   var mousePos = get_mouse_pos(canvas, evt);
   PTS = [mousePos];
@@ -81,72 +139,7 @@ canvas.addEventListener("pointermove", function (evt) {
   if (mouse_down) {
     var mousePos = get_mouse_pos(canvas, evt);
     var prev_mousePos = PTS[PTS.length - 1];
-    var x = prev_mousePos.x;
-    var y = prev_mousePos.y;
-    var dx = 0;
-    var dy = 0;
-
-    if (
-      Math.abs(mousePos.x - prev_mousePos.x) <
-      Math.abs(mousePos.y - prev_mousePos.y)
-    ) {
-      dx =
-        (mousePos.x - prev_mousePos.x) / Math.abs(mousePos.y - prev_mousePos.y);
-      if (mousePos.y - prev_mousePos.y > 0) {
-        dy = 1;
-      } else if (mousePos.y - prev_mousePos.y < 0) {
-        dy = -1;
-      }
-      var k = 0;
-      while (Math.abs(y - mousePos.y) > 0 && k < 1000) {
-        k += 1;
-        x += dx;
-        y += dy;
-        PTS.push({ x: Math.round(x + 0.5), y: y });
-      }
-    }
-    if (
-      Math.abs(mousePos.x - prev_mousePos.x) >
-      Math.abs(mousePos.y - prev_mousePos.y)
-    ) {
-      dy =
-        (mousePos.y - prev_mousePos.y) / Math.abs(mousePos.x - prev_mousePos.x);
-      if (mousePos.x - prev_mousePos.x > 0) {
-        dx = 1;
-      } else if (mousePos.x - prev_mousePos.x < 0) {
-        dx = -1;
-      }
-      var k = 0;
-      while (Math.abs(x - mousePos.x) > 0 && k < 1000) {
-        k += 1;
-        x += dx;
-        y += dy;
-        PTS.push({ x: x, y: Math.round(y + 0.5) });
-      }
-    }
-    if (
-      Math.abs(mousePos.x - prev_mousePos.x) ==
-      Math.abs(mousePos.y - prev_mousePos.y)
-    ) {
-      if (mousePos.x - prev_mousePos.x > 0) {
-        dx = 1;
-      } else if (mousePos.x - prev_mousePos.x < 0) {
-        dx = -1;
-      }
-      if (mousePos.y - prev_mousePos.y > 0) {
-        dy = 1;
-      } else if (mousePos.y - prev_mousePos.y < 0) {
-        dy = -1;
-      }
-      var k = 0;
-      while (Math.abs(x - mousePos.x) > 0 && k < 1000) {
-        k += 1;
-        x += dx;
-        y += dy;
-        PTS.push({ x: x, y: Math.round(y + 0.5) });
-      }
-    }
-
+    PTS = PTS.concat(get_interpolation(prev_mousePos, mousePos));
     PTS.push(mousePos);
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     points();
@@ -294,7 +287,7 @@ function points() {
   ctx.fillStyle = "black";
   for (let i = 0; i < PTS.length; i++) {
     ctx.beginPath();
-    ctx.arc(PTS[i].x, PTS[i].y, 5, 0, 2 * Math.PI);
+    ctx.arc(PTS[i].x, PTS[i].y, 2, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
   }
