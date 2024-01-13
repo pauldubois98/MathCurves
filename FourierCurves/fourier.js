@@ -38,6 +38,20 @@ function changed_symmetric() {
   }
   changed_coef();
 }
+function component_summand(k) {
+  return `<div class="summand">
+            <div>
+              <label for="coef${k}" class="coef_label">r<sub>${k}</sub> =</label>
+              <input type="number" id="coef${k}r" min="0" max="250"
+              value="${k * 20}" oninput="update_coef()">
+            </div>
+            <div>
+              <label for="coef${k}a" class="coef_label">a<sub>${k}</sub> =</label>
+              <input type="number" id="coef${k}a" min="0" max="360"
+              value="${k * 10}" oninput="update_coef()">
+            </div>
+          </div>`;
+}
 function changed_coef() {}
 function update_coef() {
   TRACE = [];
