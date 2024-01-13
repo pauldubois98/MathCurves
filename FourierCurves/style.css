@@ -37,6 +37,24 @@ input[type=range]{
 #points_edits{
     margin-top: 1em;
 }
+#summands{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    
+    max-width: 600px;
+}
+.summand{
+    padding: 0.2em;
+    margin: 0.2em;
+    border: 1px solid black;
+    border-radius: 0.2em;
+}
+.coef_label{
+    display: inline-block;
+    width: 2em;
+}
 #fourier-canvas{
     border: 1px solid black;
 }
