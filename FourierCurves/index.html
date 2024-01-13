@@ -22,28 +22,7 @@
             <input type="checkbox" id="symmetric_coef" onchange="changed_symmetric();">
             <label for="symmetric_coef">Symmetric coefficients</label>
         </div>
-        <div id="summands">
-            <div class="summand">
-                <div>
-                    <label for="coef1r" class="coef_label">r<sub>1</sub> =</label>
-                    <input type="number" id="coef1r" min="0" max="250" value="100" oninput="update_coef()">
-                </div>
-                <div>
-                    <label for="coef1a" class="coef_label">a<sub>1</sub> =</label>
-                    <input type="number" id="coef1a" min="0" max="360" value="0" oninput="update_coef()">
-                </div>
-            </div>
-            <div class="summand">
-                <div>
-                    <label for="coef2r" class="coef_label">r<sub>2</sub> =</label>
-                    <input type="number" id="coef2r" min="0" max="250" value="100" oninput="update_coef()">
-                </div>
-                <div>
-                    <label for="coef2a" class="coef_label">a<sub>2</sub> =</label>
-                    <input type="number" id="coef2a" min="0" max="360" value="0" oninput="update_coef()">
-                </div>
-            </div>
-        </div>
+        <div id="summands"></div>
     </div>
     <canvas id="fourier-canvas" height="600" width="600"></canvas>
     <button id="btn_save" onclick="save();">Save</button>
