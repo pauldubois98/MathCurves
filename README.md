@@ -14,5 +14,11 @@ You can create funny shapes of your own, such as this [heart example](https://pa
 ## Fourier curves
 
 We call Fourier curves functions of the form:
-$f: [0,1] \to \mathbb{C}$, $f \in \mathcal{C}^{\infty}$, $$f(t) = \sum_{k=-N}^{N} r_k e^{2 \pi i k t + a_k} \ , \quad f(0)=f(1)$$
-They can approximate any continuous closed path in $\mathbb{R}$ with arbitrary precision (given $N$ is large enough).
+$f: [0,1] \to \mathbb{C}$, $f \in \mathcal{C}^{\infty}$, $$f(t) = \sum_{k=-N}^{M} r_k e^{2 \pi i k t + a_k} \ , \quad f(0)=f(1)$$
+They can approximate any continuous closed path in $\mathbb{R}$ with arbitrary precision (given $N$ and $M$ is large enough).
+
+You can try to:
+- set coefficients yourself: https://pauldubois98.github.io/MathCurves/FourierCurves
+- interpolate points:
+https://pauldubois98.github.io/MathCurves/FourierCurves/interpolate
+- draw a close loop path: https://pauldubois98.github.io/MathCurves/FourierCurves/drawing
