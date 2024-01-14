@@ -161,6 +161,8 @@ function save() {
     params += `{k:${coef.k},r:${coef.r},a:${coef.a}},`;
   });
   params += "]";
+  params += `&min=${number_fourier_min.value}`;
+  params += `&max=${number_fourier_max.value}`;
   var old_url = window.location.href.split("?")[0];
   new_url = old_url + "?" + params;
   setTimeout(function () {
@@ -169,6 +171,12 @@ function save() {
 }
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
+if (URL_PARAMS.get("min") !== null) {
+  number_fourier_min.value = URL_PARAMS.get("min");
+}
+if (URL_PARAMS.get("max") !== null) {
+  number_fourier_max.value = URL_PARAMS.get("max");
+}
 if (URL_PARAMS.get("COEFFS") !== null) {
   COEFFS = eval(URL_PARAMS.get("COEFFS"));
   setTimeout(function () {
