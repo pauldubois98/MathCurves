@@ -157,8 +157,8 @@ setInterval(animate, 10);
 function save() {
   var params = "";
   params += "COEFFS=[";
-  PTS.forEach((pt) => {
-    params += `{x:${pt.x},y:${pt.y}},`;
+  COEFFS.forEach((coef) => {
+    params += `{k:${coef.k},r:${coef.r},a:${coef.a}},`;
   });
   params += "]";
   var old_url = window.location.href.split("?")[0];
@@ -169,11 +169,9 @@ function save() {
 }
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
-if (URL_PARAMS.get("POINTS") !== null) {
-  PTS = eval(URL_PARAMS.get("POINTS"));
+if (URL_PARAMS.get("COEFFS") !== null) {
+  COEFFS = eval(URL_PARAMS.get("COEFFS"));
   setTimeout(function () {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    points();
-    calculate_fourier();
+    changed_coef();
   }, 100);
 }
