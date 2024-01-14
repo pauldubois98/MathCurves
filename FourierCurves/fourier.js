@@ -73,11 +73,7 @@ function changed_coef() {
     }
     const prev_coef = COEFFS.filter((e) => e.k == i)[0];
     if (prev_coef === undefined) {
-      html += component_summand(
-        i,
-        Math.abs(15 + i * 10),
-        Math.abs(15 + i * 10)
-      );
+      html += component_summand(i, 0, 0);
     } else {
       html += component_summand(
         i,
