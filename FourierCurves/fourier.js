@@ -158,7 +158,9 @@ function save() {
   var params = "";
   params += "COEFFS=[";
   COEFFS.forEach((coef) => {
-    params += `{k:${coef.k},r:${coef.r},a:${coef.a}},`;
+    params += `{k:${coef.k},r:${coef.r},a:${Math.round(
+      (coef.a * 180) / Math.PI
+    )}},`;
   });
   params += "]";
   params += `&min=${number_fourier_min.value}`;
@@ -179,6 +181,10 @@ if (URL_PARAMS.get("max") !== null) {
 }
 if (URL_PARAMS.get("COEFFS") !== null) {
   COEFFS = eval(URL_PARAMS.get("COEFFS"));
+  // convert degrees to radians
+  COEFFS.forEach((coef) => {
+    coef.a = (coef.a * Math.PI) / 180;
+  });
   setTimeout(function () {
     changed_coef();
   }, 100);
