@@ -36,17 +36,17 @@ function changed_symmetric() {
   }
   changed_coef();
 }
-function component_summand(k) {
+function component_summand(k, r, a) {
   return `<div class="summand">
             <div>
               <label for="coef${k}" class="coef_label">r<sub>${k}</sub> =</label>
               <input type="number" id="coef${k}r" min="0" max="250"
-              value="${k * 20}" oninput="update_coef()">
+              value="${r}" oninput="update_coef()">
             </div>
             <div>
               <label for="coef${k}a" class="coef_label">a<sub>${k}</sub> =</label>
-              <input type="number" id="coef${k}a" min="0" max="360"
-              value="${k * 10}" oninput="update_coef()">
+              <input type="number" id="coef${k}a" min="-360" max="360"
+              value="${a}" oninput="update_coef()">
             </div>
           </div>`;
 }
@@ -71,7 +71,20 @@ function changed_coef() {
     if (i === 0) {
       continue;
     }
-    html += component_summand(i);
+    const prev_coef = COEFFS.filter((e) => e.k == i)[0];
+    if (prev_coef === undefined) {
+      html += component_summand(
+        i,
+        Math.abs(15 + i * 10),
+        Math.abs(15 + i * 10)
+      );
+    } else {
+      html += component_summand(
+        i,
+        prev_coef.r,
+        Math.round((prev_coef.a * 180) / Math.PI)
+      );
+    }
   }
   document.getElementById("summands").innerHTML = html;
   update_coef();
