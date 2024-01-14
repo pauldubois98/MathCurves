@@ -368,6 +368,8 @@ function save() {
     params += `{x:${pt.x},y:${pt.y}},`;
   });
   params += "]";
+  params += "&min=" + number_fourier_min.value;
+  params += "&max=" + number_fourier_max.value;
   var old_url = window.location.href.split("?")[0];
   new_url = old_url + "?" + params;
   setTimeout(function () {
@@ -376,6 +378,14 @@ function save() {
 }
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
+if (URL_PARAMS.get("min") !== null) {
+  number_fourier_min.value = URL_PARAMS.get("min");
+  range_fourier_min.value = URL_PARAMS.get("min");
+}
+if (URL_PARAMS.get("max") !== null) {
+  number_fourier_max.value = URL_PARAMS.get("max");
+  range_fourier_max.value = URL_PARAMS.get("max");
+}
 if (URL_PARAMS.get("POINTS") !== null) {
   PTS = eval(URL_PARAMS.get("POINTS"));
   setTimeout(function () {
