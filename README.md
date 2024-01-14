@@ -18,7 +18,12 @@ $f: [0,1] \to \mathbb{C}$, $f \in \mathcal{C}^{\infty}$, $$f(t) = \sum_{k=-N}^{M
 They can approximate any continuous closed path in $\mathbb{R}$ with arbitrary precision (given $N$ and $M$ is large enough).
 
 You can try to:
-- set coefficients yourself: https://pauldubois98.github.io/MathCurves/FourierCurves
-- interpolate points:
-https://pauldubois98.github.io/MathCurves/FourierCurves/interpolate
-- draw a close loop path: https://pauldubois98.github.io/MathCurves/FourierCurves/drawing
+
+- [set coefficients yourself](https://pauldubois98.github.io/MathCurves/FourierCurves)
+- [interpolate points](https://pauldubois98.github.io/MathCurves/FourierCurves/interpolation)
+- [draw a close loop path](https://pauldubois98.github.io/MathCurves/FourierCurves/drawing)
+
+Glass example:
+
+- [setting coefficients](https://pauldubois98.github.io/MathCurves/FourierCurves/index.html?COEFFS=[{k:0,r:420,a:45},{k:-7,r:12,a:137},{k:-6,r:9,a:-24},{k:-5,r:5,a:175},{k:-4,r:5,a:14},{k:-3,r:28,a:-147},{k:-2,r:23,a:-128},{k:-1,r:163,a:-109},{k:1,r:60,a:-71},{k:2,r:32,a:128},{k:3,r:31,a:147},{k:4,r:21,a:-14},{k:5,r:10,a:-175},{k:6,r:4,a:24},{k:7,r:9,a:-137},]&min=7&max=7)
+- [interpolating points](https://pauldubois98.github.io/MathCurves/FourierCurves/interpolation.html?min=7&max=7&POINTS=[{x:210,y:100},{x:267.5,y:100},{x:325,y:100},{x:382.5,y:100},{x:440,y:100},{x:455,y:125},{x:470,y:150},{x:485,y:175},{x:500,y:200},{x:462.5,y:225},{x:425,y:250},{x:387.5,y:275},{x:350,y:300},{x:350,y:350},{x:350,y:400},{x:350,y:450},{x:350,y:500},{x:375,y:507.5},{x:400,y:515},{x:425,y:522.5},{x:450,y:530},{x:325,y:530},{x:200,y:530},{x:225,y:522.5},{x:250,y:515},{x:275,y:507.5},{x:300,y:500},{x:300,y:450},{x:300,y:400},{x:300,y:350},{x:300,y:300},{x:262.5,y:275},{x:225,y:250},{x:187.5,y:225},{x:150,y:200},{x:165,y:175},{x:180,y:150},{x:195,y:125},])
