@@ -115,13 +115,14 @@ function plot(t) {
 }
 
 function trace() {
-  ctx.fillStyle = "black";
   var k = 0;
-  for (const point of TRACE) {
-    ctx.fillStyle = `rgba(255,0,0,${k / TRACE.length})`;
+  for (var i = 0; i < TRACE.length - 1; i++) {
+    ctx.strokeStyle = `rgba(255,0,0,${(2 * k) / TRACE.length})`;
+    ctx.lineWidth = 5;
     ctx.beginPath();
-    ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
-    ctx.fill();
+    ctx.moveTo(TRACE[i].x, TRACE[i].y);
+    ctx.lineTo(TRACE[i + 1].x, TRACE[i + 1].y);
+    ctx.stroke();
     ctx.closePath();
     k += 1;
   }
