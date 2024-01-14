@@ -32,9 +32,7 @@ function changed_symmetric() {
       (Number(number_fourier_min.value) + Number(number_fourier_max.value)) / 2
     );
     number_fourier_min.value = new_val;
-    range_fourier_min.value = new_val;
     number_fourier_max.value = new_val;
-    range_fourier_max.value = new_val;
   }
   changed_coef();
 }
@@ -51,6 +49,19 @@ function component_summand(k) {
               value="${k * 10}" oninput="update_coef()">
             </div>
           </div>`;
+}
+
+function changed_coef_min() {
+  if (symmetric_coef.checked) {
+    number_fourier_max.value = number_fourier_min.value;
+  }
+  changed_coef();
+}
+function changed_coef_max() {
+  if (symmetric_coef.checked) {
+    number_fourier_min.value = number_fourier_max.value;
+  }
+  changed_coef();
 }
 function changed_coef() {
   var html = "";
