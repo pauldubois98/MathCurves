@@ -129,9 +129,18 @@ function train_loop() {
   }
 }
 
-sgd_radio.onchange = update_optimizer;
-adam_radio.onchange = update_optimizer;
-rmsprop_radio.onchange = update_optimizer;
+sgd_radio.onchange = function () {
+  lr_input.value = 0.5;
+  update_optimizer();
+};
+adam_radio.onchange = function () {
+  lr_input.value = 0.1;
+  update_optimizer();
+};
+rmsprop_radio.onchange = function () {
+  lr_input.value = 0.01;
+  update_optimizer();
+};
 lr_input.onchange = update_optimizer;
 function update_optimizer() {
   if (sgd_radio.checked) {
@@ -164,9 +173,9 @@ function update_degree() {
   while (coefs.length > degree + 1) {
     coefs.pop();
   }
+  draw();
 }
 
 update_degree();
 update_optimizer();
-draw();
 train_loop();
