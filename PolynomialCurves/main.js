@@ -8,7 +8,7 @@ var coefs = [
   tf.variable(tf.scalar(Math.random() * 2 - 1)),
   tf.variable(tf.scalar(Math.random() * 2 - 1)),
 ];
-const optimizer = tf.train.sgd(0.5);
+var optimizer = tf.train.sgd(0.5);
 var interval_train;
 
 function predict(xs) {
@@ -101,11 +101,14 @@ function start_training() {
 
 sgd_radio.onchange = update_optimizer;
 adam_radio.onchange = update_optimizer;
+rmsprop_radio.onchange = update_optimizer;
 lr_input.onchange = update_optimizer;
 function update_optimizer() {
   if (sgd_radio.checked) {
     optimizer = tf.train.sgd(parseFloat(lr_input.value));
   } else if (adam_radio.checked) {
     optimizer = tf.train.adam(parseFloat(lr_input.value));
+  } else if (rmsprop_radio.checked) {
+    optimizer = tf.train.rmsprop(parseFloat(lr_input.value));
   }
 }
