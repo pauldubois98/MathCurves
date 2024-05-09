@@ -4,7 +4,7 @@ body{
     align-items: center;
 }
 #canvas{
-    margin: 1em;
+    margin: 0.5em;
     border: 1px solid black;
 }
 input[type="number"]{
