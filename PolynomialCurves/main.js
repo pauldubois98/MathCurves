@@ -98,3 +98,14 @@ function start_training() {
     clearInterval(interval_train);
   }
 }
+
+sgd_radio.onchange = update_optimizer;
+adam_radio.onchange = update_optimizer;
+lr_input.onchange = update_optimizer;
+function update_optimizer() {
+  if (sgd_radio.checked) {
+    optimizer = tf.train.sgd(parseFloat(lr_input.value));
+  } else if (adam_radio.checked) {
+    optimizer = tf.train.adam(parseFloat(lr_input.value));
+  }
+}
