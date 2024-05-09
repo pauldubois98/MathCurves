@@ -1,0 +1,2 @@
+var xs = [];
+var ys = [];
