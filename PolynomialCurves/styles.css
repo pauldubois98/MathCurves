@@ -23,3 +23,13 @@ button{
 .space{
     width: 1em;
 }
+
+@font-face {
+    font-family: "math";
+    src: url("CambriaMath.ttf") format("truetype");
+}
+.formula{
+    font-family: "math";
+    font-size: 1.5em;
+    margin: 0.2em;
+}
