@@ -70,6 +70,9 @@ canvas.onpointermove = function (e) {
     }
   }
 };
+canvas.onpointerleave = function (e) {
+    POINTER_DOWN = false;
+};
 canvas.onpointerup = function (e) {
   POINTER_DOWN = false;
   if (e.button == 2) {
