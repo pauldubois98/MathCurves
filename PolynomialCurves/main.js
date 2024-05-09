@@ -8,6 +8,7 @@ var coefs = [
   tf.variable(tf.scalar(Math.random() * 2 - 1)),
   tf.variable(tf.scalar(Math.random() * 2 - 1)),
 ];
+const optimizer = tf.train.sgd(0.5);
 
 function predict(xs) {
   var x = tf.tensor1d(xs);
@@ -16,6 +17,16 @@ function predict(xs) {
     y = y.add(x.pow(tf.scalar(i)).mul(coefs[i]));
   }
   return y;
+}
+
+function loss(pred, label) {
+  return pred.sub(label).square().mean();
+}
+
+function train() {
+  if (xs.length > 0) {
+    optimizer.minimize(() => loss(predict(xs), tf.tensor1d(ys)));
+  }
 }
 
 function map(value, start1, stop1, start2, stop2) {
