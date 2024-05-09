@@ -4,9 +4,9 @@ var ctx = canvas.getContext("2d");
 var POINTER_DOWN = false;
 
 var coefs = [
-  tf.scalar(Math.random() * 2 - 1),
-  tf.scalar(Math.random() * 2 - 1),
-  tf.scalar(Math.random() * 2 - 1),
+    tf.variable(tf.scalar(Math.random() * 2 - 1)),
+    tf.variable(tf.scalar(Math.random() * 2 - 1)),
+    tf.variable(tf.scalar(Math.random() * 2 - 1)),
 ];
 
 function map(value, start1, stop1, start2, stop2) {
