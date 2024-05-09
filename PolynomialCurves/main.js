@@ -9,6 +9,15 @@ var coefs = [
     tf.variable(tf.scalar(Math.random() * 2 - 1)),
 ];
 
+function predict(xs) {
+  var x = tf.tensor1d(xs);
+  var y = x.pow(tf.scalar(0)).mul(coefs[0]);
+  for (var i = 1; i < coefs.length; i++) {
+    y = y.add(x.pow(tf.scalar(i)).mul(coefs[i]));
+  }
+  return y;
+}
+
 function map(value, start1, stop1, start2, stop2) {
   return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
 }
