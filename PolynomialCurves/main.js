@@ -24,7 +24,7 @@ function loss(pred, label) {
 }
 
 function train() {
-  if (xs.length > 0) {
+  if (xs.length > 0 && !(POINTER_DOWN && drag_mode_checkbox.checked)) {
     tf.tidy(() => {
       optimizer.minimize(() => loss(predict(xs), tf.tensor1d(ys)));
     });
