@@ -118,3 +118,9 @@ reset_points_button.onclick = function () {
   ys = [];
   draw();
 };
+
+reset_coefs_button.onclick = function () {
+  for (var i = 0; i < coefs.length; i++) {
+    coefs[i].assign(tf.scalar(Math.random() * 2 - 1));
+  }
+};
