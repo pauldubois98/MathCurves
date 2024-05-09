@@ -41,8 +41,19 @@ function draw() {
     ctx.beginPath();
     var x = map(xs[i], -1, 1, 0, canvas.width);
     var y = map(ys[i], 1, -1, 0, canvas.height);
-    ctx.arc(x,y, 5, 0, 2 * Math.PI);
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
   }
+  ctx.beginPath();
+  ctx.strokeStyle = "red";
+  for (var x = -1; x < 1; x += 0.01) {
+    var y = 0;
+    for (var i = 0; i < coefs.length; i++) {
+      y += coefs[i].dataSync()[0] * Math.pow(x, i);
+    }
+    ctx.lineTo(map(x, -1, 1, 0, canvas.width), map(y, 1, -1, 0, canvas.height));
+  }
+  ctx.stroke();
+  ctx.closePath();
 }
