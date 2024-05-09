@@ -25,15 +25,14 @@ button{
 }
 
 @font-face {
-    font-family: "math";
-    src: url("CambriaMath.ttf") format("truetype")
-         url("CambriaMath.otf") format("otf")
-         url("CambriaMath.woff") format("woff")
-         url("CambriaMath.woff2") format("woff2");
-    
+    font-family: NotoSansMath;
+    src: url("NotoSansMath.ttf") format("truetype"),
+         url("NotoSansMath.otf") format("opentype"),
+         url("NotoSansMath.woff") format("woff"),
+         url("NotoSansMath.woff2") format("woff2");
 }
 .formula{
-    font-family: "math";
+    font-family: NotoSansMath;
     font-size: 1.5em;
     margin: 0.2em;
 }
