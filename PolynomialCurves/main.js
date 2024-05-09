@@ -26,7 +26,9 @@ function loss(pred, label) {
 
 function train() {
   if (xs.length > 0) {
-    optimizer.minimize(() => loss(predict(xs), tf.tensor1d(ys)));
+    tf.tidy(() => {
+      optimizer.minimize(() => loss(predict(xs), tf.tensor1d(ys)));
+    });
   }
 }
 
@@ -69,21 +71,23 @@ function draw() {
   }
   ctx.beginPath();
   ctx.strokeStyle = "red";
-  var pred_xs = tf.linspace(-1, 1, 100).dataSync();
-  var pred_ys = predict(pred_xs).dataSync();
-  for (var i = 0; i < pred_xs.length; i++) {
-    ctx.lineTo(
-      map(pred_xs[i], -1, 1, 0, canvas.width),
-      map(pred_ys[i], 1, -1, 0, canvas.height)
-    );
-  }
+  tf.tidy(() => {
+    var pred_xs = tf.linspace(-1, 1, 100).dataSync();
+    var pred_ys = predict(pred_xs).dataSync();
+    for (var i = 0; i < pred_xs.length; i++) {
+      ctx.lineTo(
+        map(pred_xs[i], -1, 1, 0, canvas.width),
+        map(pred_ys[i], 1, -1, 0, canvas.height)
+      );
+    }
+  });
   ctx.stroke();
   ctx.closePath();
 }
 
 draw();
 
-train_checkbox.onchange = start_training
+train_checkbox.onchange = start_training;
 function start_training() {
   if (train_checkbox.checked) {
     interval_train = setInterval(() => {
@@ -93,4 +97,4 @@ function start_training() {
   } else {
     clearInterval(interval_train);
   }
-};
+}
