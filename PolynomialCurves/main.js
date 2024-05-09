@@ -36,17 +36,19 @@ function map(value, start1, stop1, start2, stop2) {
 }
 
 canvas.onpointerdown = function (e) {
-  POINTER_DOWN = true;
-  var x = map(e.x - canvas.offsetLeft, 0, canvas.width, -1, 1);
-  var y = map(e.y - canvas.offsetTop, 0, canvas.height, 1, -1);
-  xs.push(x);
-  ys.push(y);
-  draw();
+  if (e.button == 0) {
+    POINTER_DOWN = true;
+    var x = map(e.pageX - canvas.offsetLeft, 0, canvas.width, -1, 1);
+    var y = map(e.pageY - canvas.offsetTop, 0, canvas.height, 1, -1);
+    xs.push(x);
+    ys.push(y);
+    draw();
+  }
 };
 canvas.onpointermove = function (e) {
   if (POINTER_DOWN) {
-    var x = map(e.x - canvas.offsetLeft, 0, canvas.width, -1, 1);
-    var y = map(e.y - canvas.offsetTop, 0, canvas.height, 1, -1);
+    var x = map(e.pageX - canvas.offsetLeft, 0, canvas.width, -1, 1);
+    var y = map(e.pageY - canvas.offsetTop, 0, canvas.height, 1, -1);
     xs[xs.length - 1] = x;
     ys[ys.length - 1] = y;
     draw();
