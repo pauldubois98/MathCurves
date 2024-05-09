@@ -57,3 +57,5 @@ function draw() {
   ctx.stroke();
   ctx.closePath();
 }
+
+draw();
