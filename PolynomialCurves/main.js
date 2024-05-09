@@ -3,12 +3,10 @@ var ys = [];
 var ctx = canvas.getContext("2d");
 var POINTER_DOWN = false;
 
-var pred_xs = tf.linspace(-1, 1, 100);
-var pred_yx = tf.tensor1d(new Array(100).fill(0));
 var coefs = [
-    tf.variable(tf.scalar(Math.random() * 2 - 1)),
-    tf.variable(tf.scalar(Math.random() * 2 - 1)),
-    tf.variable(tf.scalar(Math.random() * 2 - 1)),
+  tf.variable(tf.scalar(Math.random() * 2 - 1)),
+  tf.variable(tf.scalar(Math.random() * 2 - 1)),
+  tf.variable(tf.scalar(Math.random() * 2 - 1)),
 ];
 
 function predict(xs) {
@@ -58,8 +56,8 @@ function draw() {
   }
   ctx.beginPath();
   ctx.strokeStyle = "red";
-  pred_xs = tf.linspace(-1, 1, 100).dataSync();
-  pred_ys = predict(pred_xs).dataSync();
+  var pred_xs = tf.linspace(-1, 1, 100).dataSync();
+  var pred_ys = predict(pred_xs).dataSync();
   for (var i = 0; i < pred_xs.length; i++) {
     ctx.lineTo(
       map(pred_xs[i], -1, 1, 0, canvas.width),
