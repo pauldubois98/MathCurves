@@ -118,15 +118,18 @@ reset_coefs_button.onclick = function () {
   }
 };
 
-degree_input.onchange = function () {
-    var degree = parseInt(degree_input.value);
-    while (coefs.length < degree + 1) {
-        coefs.push(tf.variable(tf.scalar(Math.random() * 2 - 1)));
-    }
-    while (coefs.length > degree + 1) {
-        coefs.pop();
-    }
+degree_input.onchange = update_degree;
+function update_degree() {
+  var degree = parseInt(degree_input.value);
+  while (coefs.length < degree + 1) {
+    coefs.push(tf.variable(tf.scalar(Math.random() * 2 - 1)));
+  }
+  while (coefs.length > degree + 1) {
+    coefs.pop();
+  }
 }
 
+update_degree();
+update_optimizer();
 draw();
 train_loop();
