@@ -104,6 +104,20 @@ function draw() {
   });
   ctx.stroke();
   ctx.closePath();
+  write();
+}
+function write() {
+  var txt = "f(x) = ";
+  for (var i = coefs.length - 1; i > 1; i--) {
+    txt += coefs[i].dataSync()[0].toFixed(2) + "x<sup>" + i + "</sup> + ";
+  }
+  if (coefs.length > 1) {
+    txt += coefs[1].dataSync()[0].toFixed(2) + "x + ";
+  }
+  if (coefs.length > 0) {
+    txt += coefs[0].dataSync()[0].toFixed(2);
+  }
+  func_disp.innerHTML = txt;
 }
 
 train_checkbox.onchange = train_loop;
