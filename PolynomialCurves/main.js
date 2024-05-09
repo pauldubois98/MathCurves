@@ -54,6 +54,27 @@ canvas.onpointermove = function (e) {
 };
 canvas.onpointerup = function (e) {
   POINTER_DOWN = false;
+  if (e.button == 2) {
+    var closer_index = -1;
+    var min_dist = 10000;
+    var x = map(e.pageX - canvas.offsetLeft, 0, canvas.width, -1, 1);
+    var y = map(e.pageY - canvas.offsetTop, 0, canvas.height, 1, -1);
+    for (var i = 0; i < xs.length; i++) {
+      var dist = Math.sqrt((xs[i] - x) ** 2 + (ys[i] - y) ** 2);
+      if (dist < min_dist) {
+        min_dist = dist;
+        closer_index = i;
+      }
+    }
+    if (closer_index != -1) {
+      xs.splice(closer_index, 1);
+      ys.splice(closer_index, 1);
+    }
+    draw();
+  }
+};
+canvas.oncontextmenu = function (e) {
+  e.preventDefault();
 };
 
 function draw() {
