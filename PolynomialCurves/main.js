@@ -112,3 +112,9 @@ function update_optimizer() {
     optimizer = tf.train.rmsprop(parseFloat(lr_input.value));
   }
 }
+
+reset_points_button.onclick = function () {
+  xs = [];
+  ys = [];
+  draw();
+};
