@@ -46,11 +46,18 @@ canvas.onpointerdown = function (e) {
   }
 };
 canvas.onpointermove = function (e) {
-  if (POINTER_DOWN) {
+  if (POINTER_DOWN && !drag_mode_checkbox.checked) {
     var x = map(e.pageX - canvas.offsetLeft, 0, canvas.width, -1, 1);
     var y = map(e.pageY - canvas.offsetTop, 0, canvas.height, 1, -1);
     xs[xs.length - 1] = x;
     ys[ys.length - 1] = y;
+    draw();
+  }
+  if (POINTER_DOWN && drag_mode_checkbox.checked) {
+    var x = map(e.pageX - canvas.offsetLeft, 0, canvas.width, -1, 1);
+    var y = map(e.pageY - canvas.offsetTop, 0, canvas.height, 1, -1);
+    xs.push(x);
+    ys.push(y);
     draw();
   }
 };
