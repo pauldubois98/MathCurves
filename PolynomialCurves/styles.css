@@ -13,3 +13,6 @@ body{
     align-items: center;
     margin: 0.5em;
 }
+input[type="number"]{
+    width: 5em;
+}
