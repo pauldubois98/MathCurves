@@ -3,6 +3,12 @@ var ys = [];
 var ctx = canvas.getContext("2d");
 var POINTER_DOWN = false;
 
+var coefs = [
+  tf.scalar(Math.random() * 2 - 1),
+  tf.scalar(Math.random() * 2 - 1),
+  tf.scalar(Math.random() * 2 - 1),
+];
+
 function map(value, start1, stop1, start2, stop2) {
   return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
 }
