@@ -9,6 +9,7 @@ var coefs = [
   tf.variable(tf.scalar(Math.random() * 2 - 1)),
 ];
 const optimizer = tf.train.sgd(0.5);
+var interval_train;
 
 function predict(xs) {
   var x = tf.tensor1d(xs);
@@ -52,6 +53,7 @@ canvas.onpointermove = function (e) {
 };
 canvas.onpointerup = function (e) {
   POINTER_DOWN = false;
+  start_training();
 };
 
 function draw() {
@@ -80,3 +82,15 @@ function draw() {
 }
 
 draw();
+
+train_checkbox.onchange = start_training
+function start_training() {
+  if (train_checkbox.checked) {
+    interval_train = setInterval(() => {
+      train();
+      draw();
+    }, 10);
+  } else {
+    clearInterval(interval_train);
+  }
+};
