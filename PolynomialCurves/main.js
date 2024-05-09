@@ -117,7 +117,9 @@ function write() {
   if (coefs.length > 0) {
     txt += coefs[0].dataSync()[0].toFixed(2);
   }
-  func_disp.innerHTML = txt;
+  if (func_disp.innerHTML != txt) {
+    func_disp.innerHTML = txt;
+  }
 }
 
 train_checkbox.onchange = train_loop;
