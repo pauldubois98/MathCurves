@@ -56,9 +56,18 @@ canvas.onpointermove = function (e) {
   if (POINTER_DOWN && drag_mode_checkbox.checked) {
     var x = map(e.pageX - canvas.offsetLeft, 0, canvas.width, -1, 1);
     var y = map(e.pageY - canvas.offsetTop, 0, canvas.height, 1, -1);
-    xs.push(x);
-    ys.push(y);
-    draw();
+    var min_dist = 10000;
+    for (var i = 0; i < xs.length; i++) {
+      var dist = Math.sqrt((xs[i] - x) ** 2 + (ys[i] - y) ** 2);
+      if (dist < min_dist) {
+        min_dist = dist;
+      }
+    }
+    if (min_dist > 0.05) {
+      xs.push(x);
+      ys.push(y);
+      draw();
+    }
   }
 };
 canvas.onpointerup = function (e) {
