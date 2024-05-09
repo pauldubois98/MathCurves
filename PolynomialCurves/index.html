@@ -14,6 +14,17 @@
         <input type="checkbox" id="train_checkbox" checked>
         <label for="train_checkbox">Train</label>
     </div>
+    <fieldset class="input-line">
+        <legend>Optimizer</legend>
+        <div>
+            <input type="radio" id="sgd" name="optim" value="sgd" checked />
+            <label for="sgd">SGD</label>
+        </div>
+        <div>
+            <input type="radio" id="adam" name="optim" value="adam" />
+            <label for="adam">Adam</label>
+        </div>
+    </fieldset>
     <canvas id="canvas" height="600" width="600"></canvas>
 
 </body>
