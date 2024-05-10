@@ -3,6 +3,8 @@ var ys = [];
 var ctx = canvas.getContext("2d");
 var POINTER_DOWN = false;
 
+// read get parameters
+var url = new URL(window.location.href);
 var coefs = [
   tf.variable(tf.scalar(Math.random() * 2 - 1)),
   tf.variable(tf.scalar(Math.random() * 2 - 1)),
