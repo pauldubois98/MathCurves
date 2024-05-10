@@ -51,6 +51,23 @@ if (optimizer_name == "sgd") {
 delete optimizer_name;
 delete lr;
 
+save_button.onclick = save;
+function save(){
+    var url = new URL(window.location.href);
+    url.searchParams.set("coefs", coefs.map(x => Math.round(x.dataSync()[0]*1000)/1000).join(","));
+    url.searchParams.set("degree", degree_input.value);
+    url.searchParams.set("lr", lr_input.value);
+    if (sgd_radio.checked) {
+        url.searchParams.set("optim", "sgd");
+    } else if (adam_radio.checked) {
+        url.searchParams.set("optim", "adam");
+    } else if (rmsprop_radio.checked) {
+        url.searchParams.set("optim", "rmsprop");
+    }
+    window.location.href = url.href;
+    
+}
+
 function predict(xs) {
   var x = tf.tensor1d(xs);
   var y = x.pow(tf.scalar(0)).mul(coefs[0]);
