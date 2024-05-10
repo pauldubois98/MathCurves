@@ -14,11 +14,16 @@ if (coefs_vals != null) {
     }
     degree_input.value = coefs.length - 1;
 } else {
-    var coefs = [
-    tf.variable(tf.scalar(Math.random() * 2 - 1)),
-    tf.variable(tf.scalar(Math.random() * 2 - 1)),
-    tf.variable(tf.scalar(Math.random() * 2 - 1)),
-    ];
+    degree = parseFloat(url.searchParams.get("degree"));
+    if (degree == null || isNaN(degree) || degree < 0 || degree % 1 != 0) {
+        // default degree
+        degree = 2;
+    }
+    degree_input.value = degree;
+    for (var i = 0; i < degree + 1; i++) {
+        coefs.push(tf.variable(tf.scalar(Math.random() * 2 - 1)));
+    }
+    delete degree;
 }
 delete coefs_vals;
 
