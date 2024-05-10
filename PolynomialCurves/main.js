@@ -5,6 +5,18 @@ var POINTER_DOWN = false;
 
 // read get parameters
 var url = new URL(window.location.href);
+var xs = [];
+var ys = [];
+xs_vals = url.searchParams.get("xs");
+ys_vals = url.searchParams.get("ys");
+if (xs_vals != null && xs_vals != "" && ys_vals != null && ys_vals != "") {
+  xs_vals = xs_vals.split(",");
+  ys_vals = ys_vals.split(",");
+  for (var i = 0; i < xs_vals.length && i < ys_vals.length; i++) {
+    xs.push(parseFloat(xs_vals[i]));
+    ys.push(parseFloat(ys_vals[i]));
+  }
+}
 var coefs = [];
 coefs_vals = url.searchParams.get("coefs");
 if (coefs_vals != null) {
