@@ -5,11 +5,23 @@ var POINTER_DOWN = false;
 
 // read get parameters
 var url = new URL(window.location.href);
-var coefs = [
-  tf.variable(tf.scalar(Math.random() * 2 - 1)),
-  tf.variable(tf.scalar(Math.random() * 2 - 1)),
-  tf.variable(tf.scalar(Math.random() * 2 - 1)),
-];
+var coefs = [];
+coefs_vals = url.searchParams.get("coefs");
+if (coefs_vals != null) {
+    coefs_vals = coefs_vals.split(",");
+    for (var i = 0; i < coefs_vals.length; i++) {
+        coefs.push(tf.variable(tf.scalar(parseFloat(coefs_vals[i]))));
+    }
+    degree_input.value = coefs.length - 1;
+} else {
+    var coefs = [
+    tf.variable(tf.scalar(Math.random() * 2 - 1)),
+    tf.variable(tf.scalar(Math.random() * 2 - 1)),
+    tf.variable(tf.scalar(Math.random() * 2 - 1)),
+    ];
+}
+delete coefs_vals;
+
 var optimizer = tf.train.sgd(0.5);
 
 function predict(xs) {
