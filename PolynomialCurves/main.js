@@ -1,5 +1,3 @@
-var xs = [];
-var ys = [];
 var ctx = canvas.getContext("2d");
 var POINTER_DOWN = false;
 
@@ -48,36 +46,40 @@ if (lr == null || isNaN(lr)) {
 lr_input.value = lr;
 optimizer_name = url.searchParams.get("optim");
 if (optimizer_name == "sgd") {
-    optimizer = tf.train.sgd(lr);
-    sgd_radio.checked = true;
+  optimizer = tf.train.sgd(lr);
+  sgd_radio.checked = true;
 } else if (optimizer_name == "adam") {
-    optimizer = tf.train.adam(lr);
-    adam_radio.checked = true;
+  optimizer = tf.train.adam(lr);
+  adam_radio.checked = true;
 } else if (optimizer_name == "rmsprop") {
-    optimizer = tf.train.rmsprop(lr);
-    rmsprop_radio.checked = true;
+  optimizer = tf.train.rmsprop(lr);
+  rmsprop_radio.checked = true;
 } else {
-    // default optimizer
-    optimizer = tf.train.sgd(lr);
+  // default optimizer
+  optimizer = tf.train.sgd(lr);
 }
 delete optimizer_name;
 delete lr;
 
 save_button.onclick = save;
-function save(){
-    var url = new URL(window.location.href);
-    url.searchParams.set("coefs", coefs.map(x => Math.round(x.dataSync()[0]*1000)/1000).join(","));
-    url.searchParams.set("degree", degree_input.value);
-    url.searchParams.set("lr", lr_input.value);
-    if (sgd_radio.checked) {
-        url.searchParams.set("optim", "sgd");
-    } else if (adam_radio.checked) {
-        url.searchParams.set("optim", "adam");
-    } else if (rmsprop_radio.checked) {
-        url.searchParams.set("optim", "rmsprop");
-    }
-    window.location.href = url.href;
-    
+function save() {
+  var url = new URL(window.location.href);
+  url.searchParams.set("xs", xs.map((x) => Math.round(x * 1000)/1000).join(","));
+  url.searchParams.set("ys", ys.map((y) => Math.round(y * 1000)/1000).join(","));
+  url.searchParams.set(
+    "coefs",
+    coefs.map((val) => Math.round(val.dataSync()[0] * 1000) / 1000).join(",")
+  );
+  url.searchParams.set("degree", degree_input.value);
+  url.searchParams.set("lr", lr_input.value);
+  if (sgd_radio.checked) {
+    url.searchParams.set("optim", "sgd");
+  } else if (adam_radio.checked) {
+    url.searchParams.set("optim", "adam");
+  } else if (rmsprop_radio.checked) {
+    url.searchParams.set("optim", "rmsprop");
+  }
+  window.location.href = url.href;
 }
 
 function predict(xs) {
