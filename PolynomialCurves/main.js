@@ -8,25 +8,32 @@ var url = new URL(window.location.href);
 var coefs = [];
 coefs_vals = url.searchParams.get("coefs");
 if (coefs_vals != null) {
-    coefs_vals = coefs_vals.split(",");
-    for (var i = 0; i < coefs_vals.length; i++) {
-        coefs.push(tf.variable(tf.scalar(parseFloat(coefs_vals[i]))));
-    }
-    degree_input.value = coefs.length - 1;
+  coefs_vals = coefs_vals.split(",");
+  for (var i = 0; i < coefs_vals.length; i++) {
+    coefs.push(tf.variable(tf.scalar(parseFloat(coefs_vals[i]))));
+  }
+  degree_input.value = coefs.length - 1;
 } else {
-    degree = parseFloat(url.searchParams.get("degree"));
-    if (degree == null || isNaN(degree) || degree < 0 || degree % 1 != 0) {
-        // default degree
-        degree = 2;
-    }
-    degree_input.value = degree;
-    for (var i = 0; i < degree + 1; i++) {
-        coefs.push(tf.variable(tf.scalar(Math.random() * 2 - 1)));
-    }
-    delete degree;
+  degree = parseFloat(url.searchParams.get("degree"));
+  if (degree == null || isNaN(degree) || degree < 0 || degree % 1 != 0) {
+    // default degree
+    degree = 2;
+  }
+  degree_input.value = degree;
+  for (var i = 0; i < degree + 1; i++) {
+    coefs.push(tf.variable(tf.scalar(Math.random() * 2 - 1)));
+  }
+  delete degree;
 }
 delete coefs_vals;
 
+var optimizer;
+lr = parseFloat(url.searchParams.get("lr"));
+if (lr == null || isNaN(lr)) {
+  // default learning rate
+  lr = 0.5;
+}
+lr_input.value = lr;
 var optimizer = tf.train.sgd(0.5);
 
 function predict(xs) {
@@ -90,7 +97,7 @@ canvas.onpointermove = function (e) {
   }
 };
 canvas.onpointerleave = function (e) {
-    POINTER_DOWN = false;
+  POINTER_DOWN = false;
 };
 canvas.onpointerup = function (e) {
   POINTER_DOWN = false;
