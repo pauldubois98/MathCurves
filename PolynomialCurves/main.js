@@ -34,7 +34,22 @@ if (lr == null || isNaN(lr)) {
   lr = 0.5;
 }
 lr_input.value = lr;
-var optimizer = tf.train.sgd(0.5);
+optimizer_name = url.searchParams.get("optim");
+if (optimizer_name == "sgd") {
+    optimizer = tf.train.sgd(lr);
+    sgd_radio.checked = true;
+} else if (optimizer_name == "adam") {
+    optimizer = tf.train.adam(lr);
+    adam_radio.checked = true;
+} else if (optimizer_name == "rmsprop") {
+    optimizer = tf.train.rmsprop(lr);
+    rmsprop_radio.checked = true;
+} else {
+    // default optimizer
+    optimizer = tf.train.sgd(lr);
+}
+delete optimizer_name;
+delete lr;
 
 function predict(xs) {
   var x = tf.tensor1d(xs);
