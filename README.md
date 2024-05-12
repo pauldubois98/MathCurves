@@ -33,3 +33,4 @@ Glass example:
 
 ## Polynomial Fits
 - [Online tool](https://pauldubois98.github.io/MathCurves/PolynomialCurves/)
+- [Typical cubic fit](https://pauldubois98.github.io/MathCurves/PolynomialCurves/?xs=-0.75%2C0.75%2C-0.35%2C0.35&ys=-0.75%2C0.75%2C0.5%2C-0.5&degree=3&lr=0.1&optim=adam)
